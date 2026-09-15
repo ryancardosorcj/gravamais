@@ -177,7 +177,6 @@ export const PORTFOLIO = {
     { id: 'ca4fc9f0-a3c9-4e4b-b2ab-7dd0cc077f14', titulo: 'Germânia', categoria: 'Institucional', tags: ['Institucional', 'Posicionamento', 'Indústria'], thumbnail: 'url(/portfolio_thubs/germania.jpg)' },
     { id: 'f9ac146d-46e0-4861-a9a9-93703428e24b', titulo: 'Apotica', categoria: 'Institucional', tags: ['Institucional', 'Posicionamento'], thumbnail: 'url(/portfolio_thubs/apotica.jpg)' },
     { id: '02b4c12e-4b4c-409c-9171-7e42a1c53577', titulo: 'Workshop Barbearia', categoria: 'Eventos Corporativos', tags: ['Evento corporativo', 'Treinamento', 'B2B'], thumbnail: 'url(/portfolio_thubs/workshop-barbearia.jpg)' },
-    { id: '51f45fae-3cbd-4dfd-81ec-e4cac64f1b7e', titulo: 'Amor e Saúde', categoria: 'Institucional', tags: ['Institucional', 'Posicionamento', 'Saúde'], thumbnail: 'url(/portfolio_thubs/amor-e-saude.jpg)' },
     { id: 'e18487c5-4871-4730-b7d2-684ed55cbcee', titulo: 'Trailer Imobiliário', categoria: 'Inaugurações', tags: ['Inauguração', 'Lançamento', 'Varejo'], thumbnail: 'url(/portfolio_thubs/casa.jpg)' },
     { id: '5ad4e9ec-5bc3-47ee-a9fc-a44dbd5f09c4', titulo: 'Conteúdo Natal', categoria: 'Redes Sociais', tags: ['Conteúdo recorrente', 'Redes sociais', 'Alimentação'], thumbnail: 'url(/portfolio_thubs/emporio-1.jpg)' },
     { id: '9b0823ea-122f-47b8-ab13-71dd2efccc54', titulo: 'Trend Viral', categoria: 'Redes Sociais', tags: ['Conteúdo recorrente', 'Redes sociais', 'Alimentação'], thumbnail: 'url(/portfolio_thubs/emporio-2.jpg)' },
@@ -192,7 +191,6 @@ export const PORTFOLIO = {
     { id: 'fcd22f05-9934-46fd-829a-8453773af15d', titulo: 'PP Alumínio', tags: ['Institucional', 'Posicionamento'], thumbnail: 'url(/portfolio_thubs/ppa-aluminio.jpg)' },
     { id: '91cccf58-c5ae-47fb-88ed-96bf0da5d67e', titulo: 'Villa Maré Hotel', tags: ['Institucional', 'Posicionamento'], thumbnail: 'url(/portfolio_thubs/villa-mare-hotel.jpg)' },
     { id: '8e171d47-1d21-423b-862b-0b39ee5c91a1', titulo: 'Casa do Pão', tags: ['Institucional', 'Posicionamento'], thumbnail: 'url(/portfolio_thubs/casa-do-pao.jpg)' },
-    { id: '51f45fae-3cbd-4dfd-81ec-e4cac64f1b7e', titulo: 'Amor e Saúde', tags: ['Institucional', 'Posicionamento', 'Saúde'], thumbnail: 'url(/portfolio_thubs/amor-e-saude.jpg)' },
   ],
 
   inauguracoes: [
