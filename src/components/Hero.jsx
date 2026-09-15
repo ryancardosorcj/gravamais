@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { Play } from 'lucide-react';
 import { HERO, whatsappLink } from '../data/site';
 
 /* Hero — a VSL em loop, muda, sem controles, como plano de fundo.
@@ -58,10 +57,6 @@ export default function Hero() {
             className="btn btn-primary btn-lg w-full sm:w-auto"
           >
             Entre em contato
-          </a>
-          <a href="#portfolio" className="btn btn-glass-dark btn-lg w-full sm:w-auto">
-            <Play size={18} fill="currentColor" />
-            Assistir vídeo
           </a>
         </motion.div>
       </div>

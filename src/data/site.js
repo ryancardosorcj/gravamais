@@ -34,9 +34,8 @@ export const HERO = {
   titulo: ['Vídeo bonito', 'não paga', 'boleto.'],
   destaque: 2, // índice da linha que recebe o amarelo
   lead: 'A GravaMais produz conteúdo audiovisual com estratégia por trás de cada frame. Não vendemos gravação: construímos o ativo que faz a sua empresa crescer.',
-  ctaPrimario: 'Quero um diagnóstico gratuito',
-  ctaSecundario: 'Ver o portfólio',
-  vslId: '1C9vcjaCs2A',
+  ctaPrimario: 'Entre em contato',
+  vslId: 'd82dc6bc-6b6a-482b-b1e5-4886c35abd3d',
   vslLegenda: 'Assista: como transformamos vídeo em crescimento',
 };
 
