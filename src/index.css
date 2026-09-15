@@ -1,0 +1,810 @@
+@import './styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-subtle;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* --page-bg, não --bg-deep: é este fundo que aparece nos cantos vazados
+     das seções arredondadas, e ele precisa ser o mesmo da primeira à última. */
+  body {
+    background-color: var(--page-bg);
+    color: var(--fg-secondary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  /* Grão de filme sobre a página inteira. Sem ele o branco chapa e a página
+     parece impressa em laser; com ele ganha superfície — e é coerente com uma
+     produtora de vídeo.
+
+     `fixed` para o grão não rolar junto (grão que acompanha o scroll denuncia
+     que é textura, não filme). z-index alto e pointer-events:none: passa por
+     cima de tudo sem bloquear clique nenhum. 3,5% é o teto antes de virar
+     sujeira visível em gradiente. */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::after { opacity: 0.02; }
+  }
+
+  /* Qualquer elemento com data-tone vira uma "ilha" de tema: pinta o próprio
+     fundo e passa os tokens semânticos para tudo que estiver dentro. */
+  [data-tone] {
+    background-color: var(--bg-deep);
+    color: var(--fg-secondary);
+  }
+
+  /* O âmbar nunca é tinta chapada — é luz. Nasce branco, acende no amarelo
+     e desmaia de volta ao branco, então a seção se costura sozinha com as
+     seções claras vizinhas, sem corte seco. */
+  [data-tone='amber'] {
+    background-color: transparent;
+    background-image: var(--grad-amber);
+  }
+
+  /* Parede de concreto sob luz: base da cena dos fundadores.
+     Preto puro chapa; o degradê dá volume. */
+  [data-tone='wall'] {
+    background-color: var(--ink-950);
+    background-image: var(--grad-wall);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--fg-primary);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--fg-primary);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background: var(--brand);
+    color: var(--on-brand);
+  }
+}
+
+@layer components {
+  /* ---------- Layout ---------- */
+  .container-ds {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-px);
+  }
+
+  .section {
+    padding-block: var(--section-py-mobile);
+  }
+  @media (min-width: 768px) {
+    .section { padding-block: var(--section-py); }
+  }
+
+  /* ---------- Mapa do método ----------
+     Estética de painel: cartão com degradê de luz vindo do alto à esquerda,
+     borda fina clara e sombra funda. É a sombra que separa o cartão do fundo
+     preto — sem ela, cartão escuro sobre fundo escuro não existe.
+
+     O acento aqui é o DOURADO DA PAREDE (--gold-*), o mesmo já amostrado da
+     cena dos fundadores. Não é uma segunda cor de acento inventada: é a cor
+     que a casa já tinha para superfícies escuras e cinematográficas. O limão
+     segue exclusivo dos CTAs. */
+  .card-mapa {
+    background-image: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.018) 60%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow:
+      0 22px 48px -24px rgba(0, 0, 0, 0.95),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .card-origem {
+    background-image: linear-gradient(
+      155deg,
+      rgba(242, 219, 174, 0.14),
+      rgba(255, 255, 255, 0.02) 62%
+    );
+    border: 1px solid rgba(242, 219, 174, 0.22);
+    border-radius: var(--radius-lg);
+    box-shadow:
+      0 26px 60px -26px rgba(0, 0, 0, 0.95),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  }
+
+  /* O anel grosso na cor do fundo recorta a linha que passa por trás, e é o
+     que faz o nó parecer assentado SOBRE a trilha em vez de colado nela. */
+  .no-mapa {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-full);
+    background: var(--ink-950);
+    border: 1px solid var(--gold-500);
+    color: var(--gold-300);
+    box-shadow:
+      0 0 0 7px var(--ink-950),
+      0 0 22px -2px rgba(242, 219, 174, 0.45);
+  }
+
+  .brilho-ponta {
+    border-radius: var(--radius-full);
+    background: var(--gold-300);
+    box-shadow:
+      0 0 10px 2px rgba(242, 219, 174, 0.85),
+      0 0 34px 8px rgba(242, 219, 174, 0.35);
+  }
+
+  /* ---------- Caixas de seção ----------
+     A seção ocupa a LARGURA TODA da tela; só os cantos são arredondados, e o
+     que aparece neles é o --page-bg do body. Nada de contêiner com margem
+     lateral — era esse o erro da versão anterior.
+
+     Blocos vizinhos de mesmo tom formam UMA caixa: o primeiro leva
+     `.caixa-topo`, o último `.caixa-pe`, e os do meio não levam nada. O
+     resultado lê como um bloco contínuo com as duas pontas arredondadas.
+
+     Sem `overflow: hidden` de propósito: o border-radius já recorta o fundo
+     sozinho, e esconder o transbordo quebraria o lightbox do portfólio e o
+     vídeo de fundo do hero. */
+  .caixa      { border-radius: var(--raio-caixa); }
+  .caixa-topo {
+    border-top-left-radius: var(--raio-caixa);
+    border-top-right-radius: var(--raio-caixa);
+  }
+  .caixa-pe {
+    border-bottom-left-radius: var(--raio-caixa);
+    border-bottom-right-radius: var(--raio-caixa);
+  }
+
+  /* Costura entre seções de tons diferentes.
+     Sem isto, a mudança de fundo é um corte seco e o olho tropeça. */
+  .tone-seam {
+    height: var(--space-9);
+    background: linear-gradient(
+      to bottom,
+      var(--seam-from, transparent),
+      var(--seam-to, transparent)
+    );
+  }
+
+  /* ---------- Tipografia ---------- */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-spacing);
+    text-transform: uppercase;
+    color: var(--brand-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  /* Havia aqui um traço de 24px antes de cada eyebrow ("— PORTFÓLIO").
+     Removido a pedido: o rótulo se sustenta pelo tracking e pela caixa alta. */
+
+  .title-section { font-size: var(--text-4xl); }
+  @media (min-width: 768px) {
+    .title-section { font-size: var(--text-6xl); }
+  }
+
+  .title-hero {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+  @media (min-width: 768px) {
+    .title-hero { font-size: var(--text-6xl); }
+  }
+  @media (min-width: 1280px) {
+    .title-hero { font-size: var(--text-7xl); }
+  }
+
+  /* Caixa preta no claro, tinta amarela no escuro — quem decide são
+     --accent-text e --accent-mark, não o componente. Ver tokens.css.
+
+     A caixa preta saiu. O degradê agora é recortado NA LETRA
+     (background-clip: text) — é o dourado metálico da referência.
+
+     `slice` (e não `clone`) é o que faz o degradê ser UM só atravessando as
+     duas linhas: a de cima nasce mais clara e a de baixo fecha mais escura.
+     Com `clone` cada linha recomeçaria o degradê do zero e as duas ficariam
+     idênticas.
+
+     O text-fill-color transparente fica dentro do @supports: sem a checagem,
+     um navegador sem background-clip:text apagaria o texto em vez de
+     colori-lo. Fora dele, `color` segura a linha. */
+  .accent {
+    color: var(--accent-text);
+    background-image: var(--accent-grad);
+    padding: var(--accent-pad);
+    -webkit-box-decoration-break: slice;
+    box-decoration-break: slice;
+  }
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    .accent {
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  .accent-on-video { color: var(--yellow-200); }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--fg-secondary);
+    max-width: 62ch;
+  }
+  @media (min-width: 768px) {
+    .lead { font-size: var(--text-xl); }
+  }
+
+  /* ---------- Liquid glass ---------- */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-highlight);
+  }
+
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-highlight);
+  }
+
+  /* Sobre mídia a lâmina é escura fixa: uma lâmina clara sobre foto vira
+     leite e engole o texto branco. */
+  .glass-dark {
+    background: rgba(20, 20, 20, 0.5);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+  .glass-dark:hover {
+    background: rgba(30, 30, 30, 0.62);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass, .glass-strong { background: var(--bg-surface); }
+    .glass-dark, .btn-glass-dark { background: rgba(20, 20, 20, 0.92); }
+  }
+
+  /* ---------- Botões ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: var(--btn-height);
+    padding-inline: var(--btn-padding-x);
+    border-radius: var(--btn-radius);
+    font-family: var(--font-body);
+    font-weight: var(--btn-weight);
+    font-size: var(--text-base);
+    cursor: pointer;
+    white-space: nowrap;
+    max-width: 100%;
+    transition:
+      background-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+  .btn:active { transform: scale(0.97); }
+
+  /* A · sólido. O limão da marca.
+     Sobre branco o limão tem 1,10:1 de separação e sumiria — a borda preta
+     (--btn-border, só definida nos tons claros) devolve a forma sem adulterar
+     a cor. No escuro a borda é transparente: lá o limão já se sustenta. */
+  .btn-primary {
+    background: var(--brand);
+    color: var(--on-brand);
+    box-shadow: var(--shadow-brand);
+    border: 1px solid var(--btn-border, transparent);
+  }
+  .btn-primary:hover { background: var(--brand-hover); }
+
+
+
+  /* D · contorno limão. Só o traço; o vídeo é o protagonista. */
+  .btn-amber-outline {
+    background: rgba(255, 249, 125, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid var(--yellow-300);
+    color: var(--yellow-300);
+    box-shadow: 0 0 24px -8px rgba(255, 249, 125, 0.6);
+  }
+  .btn-amber-outline:hover {
+    background: var(--yellow-300);
+    color: var(--ink-900);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--fg-primary);
+    border: 1px solid var(--border-base);
+  }
+  .btn-secondary:hover {
+    background: var(--bg-elevated);
+    border-color: var(--border-strong);
+  }
+
+  .btn-glass {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-highlight);
+    color: var(--fg-primary);
+  }
+  .btn-glass:hover { border-color: var(--border-strong); }
+
+  .btn-glass-dark {
+    background: rgba(20, 20, 20, 0.55);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+  .btn-glass-dark:hover {
+    background: rgba(30, 30, 30, 0.7);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-lg {
+    height: 3.5rem;
+    padding-inline: var(--space-5);
+    font-size: var(--text-base);
+  }
+  @media (min-width: 640px) {
+    .btn-lg {
+      height: 4rem;
+      padding-inline: var(--space-7);
+      font-size: var(--text-lg);
+    }
+  }
+
+  /* ---------- Cards ----------
+     Anatomia: medalhão de ícone, título, régua e texto. Todos iguais — nenhum
+     "selecionado". A hierarquia vem da ordem, não da cor.
+
+     O hover é sóbrio de propósito: sobe 3px, a borda ganha corpo e a sombra
+     se abre. A borda de luz girando (cônico animado via @property) foi
+     REMOVIDA — um arco-íris dando voltas no card é o oposto de luxo, e era o
+     elemento que mais destoava da direção premium. */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--card-radius);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-highlight);
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-slow) var(--ease-out);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
+  }
+
+  /* Medalhão do ícone — monocromático. O ícone ocre puxava amarelo para
+     dentro de oito cards ao mesmo tempo; em preto, a fileira lê como um
+     conjunto e o amarelo sobra para o botão. */
+  .card-medal {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-deep);
+    color: var(--fg-primary);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--duration-slow) var(--ease-out);
+  }
+
+  /* Régua única sob o título */
+  .card-rules {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .card-rules span {
+    width: 60%;
+    height: 2px;
+    border-radius: var(--radius-full);
+    background: var(--fg-primary);
+    opacity: 0.22;
+  }
+
+  /* Variantes de superfície. Nenhuma é "a selecionada": são escolhas para a
+     fileira INTEIRA. */
+  .card-dark {
+    background: var(--wall-800);
+    border-color: rgba(255, 255, 255, 0.10);
+    color: var(--ink-250);
+  }
+  .card-dark h3 { color: var(--white); }
+  /* medalhão branco: o círculo amarelo-escuro sujava o card */
+  .card-dark .card-medal {
+    background: var(--white);
+    color: var(--ink-900);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  }
+  .card-dark .card-rules span { background: var(--white); }
+
+  /* Card amarelo — limão chapado, medalhão branco. */
+  .card-amber {
+    background: var(--yellow-300);
+    border-color: rgba(15, 15, 15, 0.18);
+    color: var(--ink-750);
+  }
+  .card-amber h3 { color: var(--ink-900); }
+  .card-amber .card-medal {
+    background: var(--white);
+    color: var(--ink-900);
+    box-shadow: 0 6px 18px rgba(15, 15, 15, 0.18);
+  }
+  .card-amber .card-rules span { background: var(--ink-900); }
+
+  /* ---------- Carrossel de portfólio (coverflow) ----------
+     Os cards laterais recuam em Z e giram em Y. A perspectiva vive no
+     contêiner: sem ela o rotateY vira um achatamento sem profundidade. */
+  .coverflow {
+    position: relative;
+    perspective: 1600px;
+    perspective-origin: 50% 50%;
+    /* Os cards laterais projetam para fora do palco por design. Sem conter
+       aqui, eles esticam o documento e criam scroll horizontal na página
+       inteira. `clip` contém sem criar um container de rolagem. */
+    overflow-x: clip;
+    padding-block: var(--space-4);
+  }
+  @supports not (overflow-x: clip) {
+    .coverflow { overflow-x: hidden; }
+  }
+  .coverflow-stage {
+    position: relative;
+    height: 21.5rem; /* card 9:16 (reels) no mobile */
+    transform-style: preserve-3d;
+  }
+  @media (min-width: 640px) {
+    .coverflow-stage { height: 28.5rem; }
+  }
+  @media (min-width: 768px) {
+    .coverflow-stage { height: 34rem; }
+  }
+  .coverflow-item {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 12rem; /* mobile */
+    transition:
+      transform var(--duration-slower) var(--ease-out),
+      opacity var(--duration-slower) var(--ease-out),
+      filter var(--duration-slower) var(--ease-out);
+    will-change: transform, opacity;
+  }
+  @media (min-width: 640px) {
+    .coverflow-item { width: 16rem; }
+  }
+  @media (min-width: 768px) {
+    .coverflow-item { width: 19rem; }
+  }
+
+  /* Halo ambiente atrás do card central */
+  .coverflow-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44rem;
+    height: 26rem;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    /* --brand-subtle (0.12), não --brand-glow (0.32): o halo agora é só o
+       ar quente atrás da capa, não uma lâmpada. */
+    background: radial-gradient(
+      ellipse at center,
+      var(--brand-subtle) 0%,
+      transparent 62%
+    );
+    filter: blur(16px);
+  }
+
+
+  /* ---------- Motion banner ----------
+     Faixa em movimento que costura duas seções. A lista é duplicada e o trilho
+     anda -50%: a emenda cai exatamente no início da 2ª cópia, então o loop é
+     invisível. Anima-se `transform`, nunca `left` — nada de reflow. */
+  .ticker {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-4);
+    /* 56s, não 38s: a faixa passou a ser pano de fundo, não atração. */
+    animation: ticker-run 56s linear infinite;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  .ticker-reverse .ticker-track {
+    animation-direction: reverse;
+    animation-duration: 46s; /* velocidade diferente: as duas faixas não "batem" */
+  }
+  @keyframes ticker-run {
+    to { transform: translateX(-50%); }
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    white-space: nowrap;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: var(--text-lg);
+  }
+  @media (min-width: 768px) {
+    .ticker-item { font-size: var(--text-2xl); }
+  }
+
+  /* A · faixa branca com sombra. A sombra é o que a faz existir: branco sobre
+     branco não é nada. Ela levanta a faixa da página. */
+  .ticker-white {
+    background: var(--white);
+    color: var(--ink-900);
+    box-shadow:
+      0 14px 30px -12px rgba(15, 15, 15, 0.30),
+      0 2px 0 rgba(15, 15, 15, 0.05);
+    border-top: 1px solid rgba(15, 15, 15, 0.06);
+    position: relative;
+    z-index: var(--z-raised);
+  }
+  .ticker-white .ticker-item { color: var(--ink-900); }
+
+  /* B · faixa amarela — o LIMÃO da marca. Mesma sombra: sobre uma seção clara
+     o limão tem 1,10:1 de separação e, sem a sombra, a faixa não teria borda
+     visível nenhuma. */
+  .ticker-amber {
+    background: var(--yellow-300);
+    color: var(--ink-900);
+    box-shadow:
+      0 14px 30px -12px rgba(15, 15, 15, 0.30),
+      0 2px 0 rgba(15, 15, 15, 0.05);
+    border-top: 1px solid rgba(15, 15, 15, 0.06);
+    position: relative;
+    z-index: var(--z-raised);
+  }
+  .ticker-amber .ticker-item { color: var(--ink-900); }
+
+  /* C · escura com texto branco. É a que está em uso na LP, logo abaixo do
+     hero: continua o preto da cena em vez de cortá-la com uma tarja amarela.
+     Nenhum item é pintado de limão — a faixa costura, não compete.
+
+     O texto era vazado (transparente + -webkit-text-stroke). Ficava ilegível:
+     um contorno de 1px em 42% de opacidade não tem massa suficiente para ser
+     lido em movimento. Agora é branco sólido. De quebra some o problema de o
+     -webkit-text-stroke não existir fora do WebKit/Blink. */
+  .ticker-outline {
+    background: var(--ink-950);
+    border-block: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .ticker-outline .ticker-item {
+    color: var(--white);
+  }
+  .ticker-outline .ticker-item svg {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  /* Sem estrelas: os itens são separados pelo próprio gap do trilho. */
+  .ticker-item + .ticker-item { }
+
+  /* ---------- Utilitários ---------- */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  /* O iframe do YouTube é 16:9 e não aceita object-fit. Dimensionamos pelo lado
+     que sobra (177.77vh = 16/9 da altura) e centralizamos.
+     O scale(1.25) corta as faixas de cima e de baixo, onde o player desenha o
+     título e a barra — mesmo com controls=0 e modestbranding, o YouTube ainda
+     pinta a marca nessas bordas. pointer-events:none garante que o hover nunca
+     as traga de volta. */
+  .video-cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.25);
+    width: 177.7777vh;
+    height: 56.25vw;
+    min-width: 100%;
+    min-height: 100%;
+    pointer-events: none;
+    border: 0;
+  }
+
+  /* Véu do hero. Duas camadas com trabalhos diferentes:
+     1) leve por cima, para a barra de navegação não boiar num frame claro;
+     2) forte de baixo para cima — é onde vivem o título e os CTAs, e é o que
+        garante o texto branco em qualquer frame do vídeo. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 10, 0.55) 0%,
+        rgba(10, 10, 10, 0.12) 26%,
+        transparent 45%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(8, 8, 8, 0.97) 0%,
+        rgba(8, 8, 8, 0.9) 14%,
+        rgba(10, 10, 10, 0.62) 32%,
+        rgba(10, 10, 10, 0.22) 50%,
+        transparent 68%
+      );
+  }
+
+  /* ---------- Seção "Quem somos" (referência Creativo2) ----------
+     Luz de janela entrando em diagonal + vinheta. É o que dá o volume
+     cinematográfico do fundo; sem isso o preto fica chapado. */
+  .studio-light {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      /* facho quente vindo do alto à direita */
+      radial-gradient(
+        ellipse 60% 50% at 78% 8%,
+        rgba(255, 249, 125, 0.16) 0%,
+        transparent 60%
+      ),
+      /* rebatida fria à esquerda */
+      radial-gradient(
+        ellipse 50% 60% at 8% 40%,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 60%
+      ),
+      /* vinheta */
+      radial-gradient(
+        ellipse 90% 80% at 50% 50%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.65) 100%
+      );
+  }
+
+  /* Ripas de luz da persiana, em diagonal */
+  .studio-blinds {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background: repeating-linear-gradient(
+      118deg,
+      transparent 0px,
+      transparent 26px,
+      rgba(255, 255, 255, 0.5) 26px,
+      rgba(255, 255, 255, 0.5) 60px
+    );
+    mask-image: radial-gradient(ellipse 70% 60% at 75% 10%, black, transparent 70%);
+  }
+
+  /* Moldura interna fina, como na referência */
+  .studio-frame {
+    position: absolute;
+    inset: var(--space-4);
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Palavra gigante ao fundo, atrás do recorte */
+  .backdrop-word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.03em;
+    text-align: center;
+    white-space: nowrap;
+    background: linear-gradient(
+      175deg,
+      #6b5f2a 0%,
+      var(--yellow-300) 42%,
+      #a99236 70%,
+      #4a4220 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
+  }
+
+  /* reCAPTCHA v3 badge — hidden (v3 is invisible anyway) */
+  .grecaptcha-badge {
+    display: none !important;
+  }
+}

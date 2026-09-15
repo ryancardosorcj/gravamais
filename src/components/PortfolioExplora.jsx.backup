@@ -1,0 +1,280 @@
+import { useState, useMemo, useRef } from 'react';
+import { Play, X, ChevronRight, ChevronLeft } from 'lucide-react';
+import { PORTFOLIO } from '../data/site';
+import { Reveal } from './ui';
+
+const CATEGORIAS = [
+  { key: 'redeSocial', label: 'Reels/Shorts' },
+  { key: 'institucional', label: 'Institucionais' },
+  { key: 'inauguracoes', label: 'Inaugurações' },
+  { key: 'eventos', label: 'Eventos Corporativos' },
+];
+
+export default function PortfolioExplora() {
+  const [filtro, setFiltro] = useState('redeSocial');
+  const [videoSelecionado, setVideoSelecionado] = useState(null);
+  const [paginaReels, setPaginaReels] = useState(0);
+
+  const videos = useMemo(() => {
+    switch (filtro) {
+      case 'institucional':
+        return PORTFOLIO.institucional;
+      case 'inauguracoes':
+        return PORTFOLIO.inauguracoes;
+      case 'eventos':
+        return PORTFOLIO.eventos;
+      case 'redeSocial':
+        return PORTFOLIO.redeSocial;
+      default:
+        return [];
+    }
+  }, [filtro]);
+
+  /* Para Reels/Shorts: 7 vídeos por página */
+  const temMaisReels = filtro === 'redeSocial' && videos.length > (paginaReels + 1) * 7;
+  const videosReelsAtual = videos.slice(paginaReels * 7, (paginaReels + 1) * 7);
+
+  /* Para outras categorias: dividir em 3+4 */
+  const primeiraLinha = videos.slice(0, 3);
+  const segundaLinha = videos.slice(3, 7);
+
+  const proximaPaginaReels = () => {
+    setPaginaReels((p) => p + 1);
+  };
+
+  const paginaAnteriorReels = () => {
+    setPaginaReels((p) => Math.max(0, p - 1));
+  };
+
+  return (
+    <section id="portfolio-explora" data-tone="dark" className="section py-20 md:py-32">
+      <div className="mx-auto max-w-7xl px-6">
+        {/* TÍTULO */}
+        <Reveal className="mb-10 md:mb-14">
+          <h2 className="font-display text-4xl md:text-5xl font-light text-fg-primary leading-tight max-w-3xl">
+            {PORTFOLIO.exploraTexto}
+          </h2>
+        </Reveal>
+
+        {/* FILTROS — Desço um pouco */}
+        <Reveal delay={0.05} className="mb-12">
+          <div className="flex gap-2 flex-wrap">
+            {CATEGORIAS.map(({ key, label }) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setFiltro(key);
+                  setPaginaReels(0);
+                }}
+                className={`px-4 py-2 text-xs uppercase tracking-wide rounded-full transition-all duration-base ease-out font-light ${
+                  filtro === key
+                    ? 'bg-brand text-on-brand border border-brand'
+                    : 'border border-border-base text-fg-secondary hover:border-brand hover:text-fg-primary'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* GRID COM PAGINAÇÃO (3+4 = 7 POR PÁGINA) */}
+        {filtro === 'redeSocial' ? (
+          <Reveal delay={0.1} className="relative">
+            {/* Primeira linha: 3 cards maiores */}
+            <div className="mb-4">
+              <div className="grid grid-cols-3 gap-4">
+                {videosReelsAtual.slice(0, 3).map((video) => (
+                  <CardPrincipal
+                    key={video.id}
+                    video={video}
+                    onClick={() => setVideoSelecionado(video)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Segunda linha: 4 cards menores */}
+            <div className="mb-6">
+              <div className="grid grid-cols-4 gap-4">
+                {videosReelsAtual.slice(3, 7).map((video) => (
+                  <CardSecundario
+                    key={video.id}
+                    video={video}
+                    onClick={() => setVideoSelecionado(video)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Setas de navegação — lado direito */}
+            {(paginaReels > 0 || temMaisReels) && (
+              <div className="flex justify-end gap-2">
+                {paginaReels > 0 && (
+                  <button
+                    onClick={paginaAnteriorReels}
+                    className="rounded-full bg-brand/90 p-3 text-on-brand transition-all duration-base ease-out hover:bg-brand"
+                    aria-label="Página anterior"
+                  >
+                    <ChevronLeft size={24} strokeWidth={2} />
+                  </button>
+                )}
+                {temMaisReels && (
+                  <button
+                    onClick={proximaPaginaReels}
+                    className="rounded-full bg-brand/90 p-3 text-on-brand transition-all duration-base ease-out hover:bg-brand"
+                    aria-label="Próxima página"
+                  >
+                    <ChevronRight size={24} strokeWidth={2} />
+                  </button>
+                )}
+              </div>
+            )}
+          </Reveal>
+        ) : (
+          <>
+            {/* GRID TRADICIONAL (3+4) PARA OUTRAS CATEGORIAS */}
+            <Reveal delay={0.1} className="mb-4">
+              <div className="grid grid-cols-3 gap-4">
+                {primeiraLinha.map((video) => (
+                  <CardPrincipal
+                    key={video.id}
+                    video={video}
+                    onClick={() => setVideoSelecionado(video)}
+                  />
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <div className="grid grid-cols-4 gap-4">
+                {segundaLinha.map((video) => (
+                  <CardSecundario
+                    key={video.id}
+                    video={video}
+                    onClick={() => setVideoSelecionado(video)}
+                  />
+                ))}
+              </div>
+            </Reveal>
+          </>
+        )}
+      </div>
+
+      {/* MODAL VÍDEO */}
+      {videoSelecionado && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setVideoSelecionado(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setVideoSelecionado(null)}
+              className="absolute -top-10 right-0 text-white hover:text-fg-muted transition-colors"
+              aria-label="Fechar"
+            >
+              <X size={28} />
+            </button>
+
+            <div style={{ aspectRatio: '16 / 9' }} className="rounded-lg overflow-hidden">
+              <iframe
+                src={`https://player.mediadelivery.net/embed/753229/${videoSelecionado.id}?autoplay=true&loop=false&muted=false&preload=true&responsive=true`}
+                loading="lazy"
+                style={{
+                  border: 0,
+                  width: '100%',
+                  height: '100%',
+                }}
+                allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* Card Primeira Linha (3 cards – proporção 4:5) */
+function CardPrincipal({ video, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className="group overflow-hidden rounded-lg bg-bg-elevated cursor-pointer"
+    >
+      <div
+        className="relative overflow-hidden bg-bg-elevated"
+        style={{
+          aspectRatio: '4 / 5',
+          backgroundImage: video.thumbnail || 'linear-gradient(135deg, #4b5563 0%, #2d3748 100%)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay escuro */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-100 transition-opacity duration-base ease-out group-hover:opacity-40" />
+
+        {/* Play button — centro */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-base ease-out">
+          <div className="rounded-full border border-white/40 p-2.5">
+            <Play size={16} className="text-white" fill="white" />
+          </div>
+        </div>
+
+        {/* Info — canto inferior */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+          <p className="text-xs text-fg-secondary opacity-80 mb-2">
+            {video.tags?.[0]} · {video.tags?.[1]}
+          </p>
+          <h3 className="text-lg font-light text-fg-primary">
+            {video.titulo}
+          </h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Card Segunda Linha (4 cards – proporção 4:5) */
+function CardSecundario({ video, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className="group overflow-hidden rounded-lg bg-bg-elevated cursor-pointer"
+    >
+      <div
+        className="relative overflow-hidden bg-bg-elevated"
+        style={{
+          aspectRatio: '4 / 5',
+          backgroundImage: video.thumbnail || 'linear-gradient(135deg, #4b5563 0%, #2d3748 100%)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay escuro */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-100 transition-opacity duration-base ease-out group-hover:opacity-40" />
+
+        {/* Play button — centro */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-base ease-out">
+          <div className="rounded-full border border-white/40 p-2">
+            <Play size={14} className="text-white" fill="white" />
+          </div>
+        </div>
+
+        {/* Info — canto inferior */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 pointer-events-none">
+          <p className="text-2xs text-fg-secondary opacity-80 mb-1">
+            {video.tags?.[0]} · {video.tags?.[1]}
+          </p>
+          <h3 className="text-sm font-light text-fg-primary">
+            {video.titulo}
+          </h3>
+        </div>
+      </div>
+    </div>
+  );
+}
