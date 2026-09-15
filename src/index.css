@@ -685,21 +685,12 @@
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
 
-  /* O iframe do YouTube é 16:9 e não aceita object-fit. Dimensionamos pelo lado
-     que sobra (177.77vh = 16/9 da altura) e centralizamos.
-     O scale(1.25) corta as faixas de cima e de baixo, onde o player desenha o
-     título e a barra — mesmo com controls=0 e modestbranding, o YouTube ainda
-     pinta a marca nessas bordas. pointer-events:none garante que o hover nunca
-     as traga de volta. */
+  /* Iframe de vídeo em background — sem crop, ocupa a tela toda */
   .video-cover {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.25);
-    width: 177.7777vh;
-    height: 56.25vw;
-    min-width: 100%;
-    min-height: 100%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     border: 0;
   }
