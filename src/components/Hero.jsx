@@ -23,11 +23,12 @@ export default function Hero() {
     >
       <iframe
         className="video-cover"
-        src={`https://www.youtube-nocookie.com/embed/${HERO.vslId}?autoplay=1&mute=1&loop=1&playlist=${HERO.vslId}&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&iv_load_policy=3`}
+        src={`https://player.mediadelivery.net/embed/753229/${HERO.vslId}?autoplay=true&loop=true&muted=true&controls=false&responsive=true`}
         title="VSL da GravaMais em plano de fundo"
         tabIndex={-1}
         aria-hidden="true"
-        allow="autoplay; encrypted-media"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowFullScreen
       />
       <div className="hero-scrim" />
 
