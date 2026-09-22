@@ -1,0 +1,211 @@
+/* ============================================================
+   GRAVAMAIS — CONTEÚDO DA PÁGINA DE PROPOSTA
+   Mesma regra de site.js: todo texto e número vive aqui.
+   Para um cliente novo, acrescente uma chave em CLIENTES_PROPOSTA.
+   ============================================================ */
+import { PORTFOLIO } from './site';
+
+/* Cada chave é o :slug da rota /proposta/:slug.
+
+   `olhar` é a ÚNICA parte da página escrita do zero a cada cliente — é o
+   estudo daquela empresa. Cliente sem `olhar` não renderiza a seção, em vez
+   de renderizá-la vazia: uma proposta com quatro blocos em branco diz o
+   contrário do que a seção existe para dizer.
+
+   `base` é o TEMPLATE, servido em /proposta/base. Não é um cliente: é a versão
+   canônica da página, a que se olha para conferir o padrão e a que se copia
+   para abrir um cliente novo. Melhorias no padrão entram nela.
+
+   Os textos dela descrevem o que vai em cada campo. Substitua ao duplicar;
+   nenhum cliente real deve entrar no ar com eles. */
+export const CLIENTES_PROPOSTA = {
+  base: {
+    nome: 'Sua Marca',
+    logo: null,
+    olhar: {
+      negocio:
+        'O que a empresa faz, em que mercado atua e para quem vende.',
+      diferencial:
+        'O que a empresa já faz bem e que hoje não aparece na comunicação.',
+      oportunidade:
+        'O espaço que o estudo identificou: posicionamento, autoridade, percepção de valor ou geração de demanda.',
+      comunicacao:
+        'Como o conteúdo pode trabalhar esses pontos na prática.',
+      direcoes: ['Autoridade', 'Desejo', 'Quebra de objeções', 'Diferenciação'],
+    },
+  },
+  mgsolar: {
+    nome: 'MG Solar Itu',
+    logo: '/proposta/logo-mgsolar.png',
+    olhar: {
+      negocio:
+        'Energia solar fotovoltaica em Itu e região, atendendo residencial, comercial, industrial e rural. O mix passa ainda por sistemas híbridos e off-grid, mercado livre de energia e carregadores para veículos elétricos.',
+      diferencial:
+        'Mais de 20 anos de operação, engenheiros na equipe, projeto personalizado e acompanhamento remoto do desempenho de cada sistema. É repertório técnico que hoje a comunicação não mostra.',
+      oportunidade:
+        'A distância entre o que a empresa é e o que o digital comunica. Quem investe em solar compara fornecedor antes de pedir orçamento, e a presença atual não confirma os 20 anos de estrada.',
+      comunicacao:
+        'Conteúdo que comprove a operação — engenharia, obra e cliente atendido — no lugar de promessa de economia. Material institucional para sustentar o site, conteúdo recorrente para reativar o Instagram e peças que respondam o que trava o orçamento.',
+      direcoes: ['Autoridade', 'Prova', 'Quebra de objeções', 'Diferenciação'],
+    },
+  },
+};
+
+export const CLIENTE_PADRAO = { nome: 'Sua Marca', logo: null };
+
+/* 1 · Hero --------------------------------------------------- */
+export const HERO_PROPOSTA = {
+  subtitulo:
+    'Uma direção audiovisual desenhada para transformar atenção em percepção de valor.',
+  cta: 'Conheça a proposta',
+  ctaHref: '#leitura',
+  vslId: 'd82dc6bc-6b6a-482b-b1e5-4886c35abd3d',
+};
+
+/* 2 · Nossa leitura ------------------------------------------ */
+export const LEITURA = {
+  /* Strings corridas, não arrays de linhas: no layout de referência o título
+     quebra sozinho pela largura da coluna. Forçar as quebras deixaria a
+     terceira linha órfã em telas médias.
+     A segunda frase é a que recebe o acento em limão. */
+  titulo: 'Sua marca não precisa apenas aparecer.',
+  tituloDestaque: 'Precisa ser reconhecida.',
+  lead: 'Unimos estratégia, direção criativa e produção audiovisual para construir uma presença coerente, da primeira ideia ao conteúdo que chega ao público.',
+  numero: '150+',
+  numeroLegenda: 'Projetos colocados em movimento',
+  pilares: [
+    'Estratégia alinhada ao momento da marca',
+    'Conceitos criativos com linguagem própria',
+    'Captação dirigida para aproveitar cada diária',
+    'Pós-produção pensada para retenção e conversão',
+  ],
+};
+
+/* 3 · Portfólio — recorte enxuto, um pouco de cada categoria --- */
+export const PORTFOLIO_PROPOSTA = {
+  titulo: ['É assim que a estratégia', 'ganha forma.'],
+  destaque: 1,
+  lead: 'Uma seleção de projetos para mostrar estética, acabamento e a forma como traduzimos estratégia em linguagem visual.',
+  itens: [
+    { ...PORTFOLIO.institucional[0], categoria: 'Institucional' },
+    { ...PORTFOLIO.institucional[1], categoria: 'Institucional' },
+    { ...PORTFOLIO.eventos[0], categoria: 'Evento corporativo' },
+    { ...PORTFOLIO.eventos[4], categoria: 'Evento corporativo' },
+    { ...PORTFOLIO.inauguracoes[0], categoria: 'Inauguração' },
+    { ...PORTFOLIO.inauguracoes[1], categoria: 'Inauguração' },
+    { ...PORTFOLIO.redeSocial[3], categoria: 'Redes sociais' },
+    { ...PORTFOLIO.redeSocial[16], categoria: 'Redes sociais' },
+  ],
+};
+
+/* 4.5 · Como projetamos — moldura do MapaMental reaproveitado da LP.
+   O componente é o mesmo; só o título, o lead e a ressalva entram por prop. */
+export const METODO_PROPOSTA = {
+  titulo: ['Como projetamos'],
+  destaque: null,
+  lead: 'Antes de definir entregas, entendemos o momento da empresa, seus objetivos e o que a comunicação precisa construir. A partir disso, conectamos estratégia, audiovisual e distribuição em uma operação pensada para fazer sentido para o negócio.',
+};
+
+/* 4.7 · Nosso olhar — a leitura da empresa do cliente.
+   Só a moldura vive aqui; o conteúdo de cada bloco vem do `olhar` do cliente.
+   `direcoes` é opcional e não precisa trazer as quatro: quando o estudo
+   aponta duas, entram duas. */
+export const OLHAR = {
+  eyebrow: 'Nosso olhar',
+  tituloPrefixo: 'Nosso olhar sobre',
+  lead: 'Antes de definir uma solução, estudamos o momento da empresa, seu mercado, seu público e as oportunidades que podem ser exploradas na comunicação.',
+  blocos: [
+    { chave: 'negocio', rotulo: 'O negócio' },
+    { chave: 'diferencial', rotulo: 'O diferencial' },
+    { chave: 'oportunidade', rotulo: 'A oportunidade' },
+    { chave: 'comunicacao', rotulo: 'A comunicação' },
+  ],
+  direcoesRotulo: 'Direções de conteúdo',
+};
+
+/* 5 · Planos — o POSICIONAMENTO de cada plano, não o escopo item a item.
+   O escopo detalhado e o preço vivem no PlanosSelector, logo abaixo.
+
+   A ordem é crescente (ESCALA → ESSENCIAL → PRO): as setas entre os cartões só
+   fazem sentido lendo do menor grau de participação para o maior. */
+export const PLANOS_CABECALHO = {
+  eyebrow: 'Nossos planos',
+  titulo: ['Três formas de trabalhar', 'a comunicação da sua empresa.'],
+  lead: 'Cada plano foi pensado para um nível diferente de participação da GravaMais na sua operação. Escolha o que faz mais sentido para o momento da sua empresa.',
+  nota: 'Mais do que produzir vídeos, nós ajudamos a construir uma comunicação com estratégia e resultado.',
+};
+
+/* As imagens são 1200x750 (16:10), a mesma proporção do slot no cartão. Elas
+   entram com `object-cover`: trocar por um arquivo de outra proporção apara as
+   bordas em vez de deformar. */
+export const PLANOS_DETALHE = [
+  {
+    id: 'escala',
+    nome: 'ESCALA',
+    imagem: '/proposta/escala.jpg',
+    titulo: 'Produção de conteúdo recorrente',
+    texto:
+      'Para empresas que já possuem uma estrutura de marketing e precisam de uma produção audiovisual consistente para manter sua comunicação ativa.',
+    foco: 'Vídeos + Fotografias',
+  },
+  {
+    id: 'essencial',
+    nome: 'ESSENCIAL',
+    imagem: '/proposta/essencial.jpg',
+    titulo: 'Estratégia, produção e distribuição',
+    texto:
+      'Para empresas que precisam de uma estrutura mais completa, com planejamento, produção e distribuição dos conteúdos para manter sua comunicação ativa, posicionada e alcançando as pessoas certas.',
+    foco: 'Vídeos + Fotografias + Estratégia + Distribuição + Alcance',
+  },
+  {
+    id: 'pro',
+    nome: 'PRO',
+    imagem: '/proposta/pro.jpg',
+    titulo: 'Uma operação completa',
+    texto:
+      'Para empresas que querem levar sua comunicação a outro nível, com estratégia, produção, distribuição, mídia e conversão trabalhando de forma integrada.',
+    foco: 'Vídeos + Fotografias + Estratégia + Distribuição + Alcance + Conversão',
+  },
+];
+
+/* 6 · Investimento — a moldura do PlanosSelector --------------- */
+export const INVESTIMENTO = {
+  titulo: ['Três formatos.', 'Uma decisão de posicionamento.'],
+  destaque: 1,
+  lead: 'O ESSENCIAL é onde a maioria das marcas acelera. ESCALA para começar; PRO para escalar. O escopo final é validado antes do início.',
+};
+
+/* 7 · FAQ ----------------------------------------------------- */
+export const FAQ = {
+  titulo: ['Tudo alinhado', 'para começar bem.'],
+  destaque: 1,
+  perguntas: [
+    {
+      pergunta: 'Qual é o prazo de entrega?',
+      resposta:
+        'O cronograma é definido após a captação. Como referência, trabalhamos com até 7 dias úteis.',
+    },
+    {
+      pergunta: 'Como funciona o dia de captação?',
+      resposta:
+        'Chegamos com os roteiros aprovados e conduzimos a gravação, do setup de luz e áudio à direção de cada cena.',
+    },
+    {
+      pergunta: 'Quantas revisões estão incluídas?',
+      resposta:
+        'O ESCALA inclui uma rodada consolidada de ajustes. O ESSENCIAL e o PRO incluem até duas, desde que respeitado o escopo aprovado.',
+    },
+    {
+      pergunta: 'Os vídeos chegam prontos para publicar?',
+      resposta:
+        'No ESCALA os arquivos são entregues nos formatos combinados, com edição, tratamento de cor, trilha e legendas quando previstas no escopo. Nos planos ESSENCIAL e PRO, fazemos toda a gestão de postagem.',
+    },
+  ],
+};
+
+/* 8 · Fecho --------------------------------------------------- */
+export const FECHO = {
+  titulo: ['E aí,', 'vamos trabalhar juntos?'],
+  destaque: 1,
+  eyebrow: 'Contato',
+};

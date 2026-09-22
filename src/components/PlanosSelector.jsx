@@ -51,7 +51,7 @@ export default function PlanosSelector() {
       name: 'ESSENCIAL',
       description: 'Vídeos + fotos + estratégia completa. Ideal pra quem precisa de estrutura.',
       videoOptions: [4, 6],
-      features: ['Estratégia e roteiros', 'Análise de resultados/métricas', 'Social Media Smart', 'Tráfego Pago (1 plataforma)'],
+      features: ['Estratégia e roteiros', 'Análise de resultados/métricas', 'Reunião mensal', 'Social Media Smart', 'Tráfego Pago (1 plataforma)'],
       disabledFeatures: ['Criação de Landing Page'],
       recommended: true,
       hasAds: true,
@@ -61,7 +61,7 @@ export default function PlanosSelector() {
       name: 'PRO',
       description: 'Tudo completo. Ideal para empresa que quer ir para outro patamar.',
       videoOptions: [6, 8],
-      features: ['Estratégia e roteiros', 'Análise de resultados/métricas', 'Social Media Completo', 'Tráfego Pago Completo', 'Criação de Landing Page'],
+      features: ['Estratégia e roteiros', 'Análise de resultados/métricas', 'Reunião mensal', 'Social Media Completo', 'Tráfego Pago Completo', 'Criação de Landing Page'],
       disabledFeatures: [],
       recommended: false,
     },
@@ -88,12 +88,14 @@ export default function PlanosSelector() {
     <div className="bg-black text-white py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-2">
+          {/* text-5xl é fixo em 3.5rem; com o título novo (bem mais longo que
+              o anterior) isso viraria seis linhas a 375px. Mesma escala dos
+              demais títulos do projeto. */}
+          <h1 className="text-3xl md:text-5xl font-bold mb-2">
             <span className="bg-gradient-to-r from-brand to-yellow-500 bg-clip-text text-transparent">
-              Planos GravaMais
+              Três formatos. Uma decisão de posicionamento.
             </span>
           </h1>
-          <p className="text-lg opacity-70">Escolha o plano e customize a quantidade de vídeos</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -237,6 +239,13 @@ export default function PlanosSelector() {
             );
           })}
         </div>
+
+        {/* A ressalva fecha a seção em vez de abrir: no meio, logo abaixo do
+            título, ela competia com os cards pela atenção. */}
+        <p className="mt-14 max-w-[64ch] border-t border-zinc-800 pt-6 text-xs leading-relaxed text-gray-500">
+          O ESSENCIAL é onde a maioria das marcas acelera. ESCALA para começar;
+          PRO para escalar. O escopo final é validado antes do início.
+        </p>
       </div>
     </div>
   );

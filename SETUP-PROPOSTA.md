@@ -47,14 +47,14 @@ npm run dev
 ### 4. Testar
 
 - **Landing Page:** http://localhost:5173/
-- **Página de Proposta:** http://localhost:5173/proposta/teste
+- **Página de Proposta:** http://localhost:5173/proposta/base
 
 ## 🚀 Quando Estiver Pronto para Publicar
 
 É só me avisar! Vou fazer:
 
 1. ✓ Fazer build: `npm run build`
-2. ✓ Deploy em `gravamaisproducoes.com.br/proposta/teste`
+2. ✓ Deploy em `gravamaisproducoes.com.br/proposta/base`
 3. ✓ Mandar o link para você compartilhar
 
 ## 📝 Futuras Mudanças

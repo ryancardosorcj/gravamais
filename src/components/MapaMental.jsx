@@ -36,7 +36,17 @@ import { TitleBlock, Reveal } from './ui';
 
 const ICONES = [Search, Compass, PenLine, Clapperboard, Send, LayoutGrid, TrendingUp];
 
-export default function MapaMental() {
+/* Título, lead, ressalva e arredondamento entram por prop com o valor da LP
+   como padrão: a página de proposta reusa a MESMA trilha com outra moldura
+   (outro título, sem ressalva, sem canto arredondado por estar no meio de um
+   bloco escuro). Os nós — que são o conteúdo de fato — nunca mudam. */
+export default function MapaMental({
+  titulo = MAPA.titulo,
+  destaque = MAPA.destaque,
+  lead = MAPA.lead,
+  ressalva = MAPA.ressalva,
+  caixa = 'caixa-topo',
+}) {
   const [segmentos, setSegmentos] = useState([]);
   const [fim, setFim] = useState(null);
   // Dimensão do palco — necessária para a região do filtro de brilho.
@@ -115,7 +125,7 @@ export default function MapaMental() {
     <section
       id="metodo"
       data-tone="dark"
-      className="caixa-topo section relative overflow-hidden"
+      className={`${caixa} section relative overflow-hidden`}
     >
       {/* Luz de topo — tira o preto chapado do fundo do painel */}
       <div
@@ -131,11 +141,11 @@ export default function MapaMental() {
         <Reveal>
           <div className="mx-auto max-w-4xl text-center">
             <TitleBlock
-              linhas={MAPA.titulo}
-              destaque={MAPA.destaque}
+              linhas={titulo}
+              destaque={destaque}
               className="mx-auto max-w-[34ch] font-display text-3xl font-bold leading-[1.1] tracking-tight md:text-5xl"
             />
-            <p className="lead mx-auto mt-7 !max-w-[78ch]">{MAPA.lead}</p>
+            <p className="lead mx-auto mt-7 !max-w-[78ch]">{lead}</p>
           </div>
         </Reveal>
 
@@ -269,11 +279,13 @@ export default function MapaMental() {
 
         {/* A ressalva fecha a seção: é ela que separa "ferramentas que se
             conectam" de "pacote fechado de agência". */}
-        <Reveal delay={0.1}>
-          <p className="mx-auto mt-28 max-w-[58ch] border-t border-subtle pt-8 text-center text-sm text-fg-muted">
-            {MAPA.ressalva}
-          </p>
-        </Reveal>
+        {ressalva && (
+          <Reveal delay={0.1}>
+            <p className="mx-auto mt-28 max-w-[58ch] border-t border-subtle pt-8 text-center text-sm text-fg-muted">
+              {ressalva}
+            </p>
+          </Reveal>
+        )}
       </div>
     </section>
   );
