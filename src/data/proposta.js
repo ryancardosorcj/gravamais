@@ -116,8 +116,15 @@ export const LEITURA = {
   titulo: 'Sua marca não precisa apenas aparecer.',
   tituloDestaque: 'Precisa ser reconhecida.',
   lead: 'Unimos estratégia, direção criativa e produção audiovisual para construir uma presença coerente, da primeira ideia ao conteúdo que chega ao público.',
-  numero: '150+',
-  numeroLegenda: 'Projetos colocados em movimento',
+  /* Três números, não um. Eles respondem em sequência as dúvidas de quem lê
+     uma proposta: sabe fazer, está há quanto tempo nisso, e o cliente fica
+     depois de assinar. O último é o mais persuasivo e o que menos concorrente
+     consegue mostrar. */
+  numeros: [
+    { prefixo: '+', valor: 1000, legenda: 'Vídeos entregues' },
+    { prefixo: '+', valor: 6, legenda: 'Anos de mercado' },
+    { valor: 90, sufixo: '%', legenda: 'Seguem após o primeiro ciclo' },
+  ],
   pilares: [
     'Estratégia alinhada ao momento da marca',
     'Conceitos criativos com linguagem própria',

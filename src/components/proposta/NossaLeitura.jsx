@@ -1,5 +1,6 @@
 import { LEITURA } from '../../data/proposta';
 import { Reveal } from '../ui';
+import Contador from './Contador';
 
 /* Nossa leitura — tom escuro, duas colunas.
 
@@ -32,12 +33,26 @@ export default function NossaLeitura() {
 
           <Reveal delay={0.12}>
             <div className="border-t border-strong pt-8">
-              <p className="font-display text-6xl font-extrabold leading-none tracking-tight text-brand md:text-7xl">
-                {LEITURA.numero}
-              </p>
-              <p className="mt-4 max-w-[26ch] font-mono text-2xs uppercase leading-relaxed tracking-[0.16em] text-fg-muted">
-                {LEITURA.numeroLegenda}
-              </p>
+              {/* Fileira de três: o número cai para clamp porque "+1.000" tem
+                  cinco caracteres numa célula de ~1/9 da página. Os filetes
+                  entre as células saem do gap-px sobre o fundo da borda, como
+                  no resto da página. */}
+              <ol className="grid grid-cols-3 gap-px bg-[var(--border-subtle)]">
+                {LEITURA.numeros.map(({ prefixo, valor, sufixo, legenda }) => (
+                  <li key={legenda} className="bg-bg-deep pr-3 [&:not(:first-child)]:pl-4">
+                    <Contador
+                      valor={valor}
+                      prefixo={prefixo}
+                      sufixo={sufixo}
+                      className="block font-display font-extrabold leading-none tracking-tight text-brand"
+                      style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.5rem)' }}
+                    />
+                    <span className="mt-3 block font-mono text-2xs uppercase leading-relaxed tracking-[0.14em] text-fg-muted">
+                      {legenda}
+                    </span>
+                  </li>
+                ))}
+              </ol>
 
               <ol className="mt-10 border-t border-subtle">
                 {LEITURA.pilares.map((texto, i) => (
