@@ -123,7 +123,7 @@ export default function PlanosSelector() {
                 >
                   {/* Header */}
                   <div className="mb-6">
-                    <h2 className="text-2xl font-bold mb-2">{plan.name}</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-white">{plan.name}</h2>
                     <p className="text-sm text-gray-400 leading-relaxed">{plan.description}</p>
                   </div>
 
