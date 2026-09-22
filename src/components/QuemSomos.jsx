@@ -34,7 +34,7 @@ export default function QuemSomos() {
     >
       {/* Mobile: 1440×1920 (3:4) */}
       <img
-        src="/equipe/casal-cena-mobile.png"
+        src="/equipe/casal-cena-mobile.jpg"
         alt="Gabrieli Ruivo e Ryan Cardoso, fundadores da GravaMais, diante de uma parede com o letreiro GravaMais"
         width="1440"
         height="1920"
@@ -43,7 +43,7 @@ export default function QuemSomos() {
 
       {/* Desktop: 1920×1080 (16:9) */}
       <img
-        src="/equipe/casal-cena.png"
+        src="/equipe/casal-cena.jpg"
         alt="Gabrieli Ruivo e Ryan Cardoso, fundadores da GravaMais, diante de uma parede com o letreiro GravaMais"
         width="1920"
         height="1080"
