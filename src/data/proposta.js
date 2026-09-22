@@ -5,6 +5,35 @@
    ============================================================ */
 import { PORTFOLIO } from './site';
 
+/* As listas de categoria do portfólio, e o rótulo que cada uma imprime no
+   card. `destaques` fica de fora de propósito: ela repete itens das outras e
+   uma busca por título acharia a cópia errada. */
+const CATEGORIA_POR_LISTA = {
+  institucional: 'Institucional',
+  inauguracoes: 'Inauguração',
+  eventos: 'Evento corporativo',
+  redeSocial: 'Redes sociais',
+};
+
+/* Monta a seleção do portfólio a partir dos TÍTULOS, que é como o portfólio é
+   discutido na conversa — nada de índices, que mudam de lugar toda vez que um
+   vídeo novo entra no meio da lista em site.js.
+
+   Título inexistente estoura na hora em que o módulo carrega, em vez de sumir
+   calado do carrossel — a página inteira falha e o erro fica visível, que é
+   melhor do que uma proposta ir ao cliente com cinco vídeos de seis. Vale
+   conferir a página depois de mexer nesta lista: o build passa de qualquer
+   jeito, porque a chamada só roda no navegador. */
+export function montarPortfolio(titulos) {
+  return titulos.map((titulo) => {
+    for (const [lista, categoria] of Object.entries(CATEGORIA_POR_LISTA)) {
+      const video = PORTFOLIO[lista].find((v) => v.titulo === titulo);
+      if (video) return { ...video, categoria };
+    }
+    throw new Error(`Vídeo não encontrado no portfólio: "${titulo}"`);
+  });
+}
+
 /* Cada chave é o :slug da rota /proposta/:slug.
 
    `olhar` é a ÚNICA parte da página escrita do zero a cada cliente — é o
@@ -47,6 +76,22 @@ export const CLIENTES_PROPOSTA = {
       comunicacao:
         'Conteúdo que comprove a operação — engenharia, obra e cliente atendido — no lugar de promessa de economia. Material institucional para sustentar o site, conteúdo recorrente para reativar o Instagram e peças que respondam o que trava o orçamento.',
       direcoes: ['Autoridade', 'Prova', 'Quebra de objeções', 'Diferenciação'],
+    },
+    portfolio: montarPortfolio([
+      'Germânia',
+      'PP Alumínio',
+      'Lançamento Toyota',
+      'Depoimento PS Digital',
+      'Lixadeira',
+      'Serra Copo',
+    ]),
+    planos: {
+      /* Negociado para esta proposta: o ESCALA de 8 sai por 2500 e a promoção
+         do 10 cai. A tabela do plano é substituída inteira — os outros dois
+         planos seguem no padrão. */
+      precos: { escala: { 4: 1500, 6: 1900, 8: 2500, 10: 3300 } },
+      promos: { escala: null },
+      inicial: { escala: 8 },
     },
   },
 };

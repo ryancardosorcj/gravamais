@@ -12,8 +12,27 @@ const PROMOS = {
   pro: { 8: 4400 },
 };
 
-export default function PlanosSelector() {
-  const [qtd, setQtd] = useState({ escala: 4, essencial: 4, pro: 6 });
+const INICIAL = { escala: 4, essencial: 4, pro: 6 };
+
+/* Uma proposta pode negociar preço, promoção e quantidade de partida sem que
+   as outras mudem: o cliente passa só o plano que muda, e a tabela daquele
+   plano é SUBSTITUÍDA, não mesclada por quantidade. Mesclar por quantidade
+   tornaria impossível remover uma faixa de preço — e `promos: { escala: null }`
+   é justamente como se tira uma promoção de um cliente. */
+function comOverride(padrao, override) {
+  if (!override) return padrao;
+  const saida = { ...padrao };
+  for (const [plano, tabela] of Object.entries(override)) {
+    saida[plano] = tabela ?? {};
+  }
+  return saida;
+}
+
+export default function PlanosSelector({ precos, promos, inicial }) {
+  const PRECO_TAB = comOverride(PRECOS, precos);
+  const PROMO_TAB = comOverride(PROMOS, promos);
+
+  const [qtd, setQtd] = useState({ ...INICIAL, ...inicial });
   const [adsType, setAdsType] = useState('meta');
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openAdsDropdown, setOpenAdsDropdown] = useState(null);
@@ -28,8 +47,8 @@ export default function PlanosSelector() {
   };
 
   const getPreco = (plano) => {
-    const preco = PRECOS[plano][qtd[plano]];
-    const promo = PROMOS[plano][qtd[plano]];
+    const preco = PRECO_TAB[plano][qtd[plano]];
+    const promo = PROMO_TAB[plano][qtd[plano]];
     return { preco, promo };
   };
 
@@ -78,7 +97,7 @@ export default function PlanosSelector() {
           }`}
         >
           <span>{opt} vídeos</span>
-          {PROMOS[plano]?.[opt] && <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded ml-2">PROMO</span>}
+          {PROMO_TAB[plano]?.[opt] && <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded ml-2">PROMO</span>}
         </div>
       ))}
     </div>

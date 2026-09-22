@@ -4,10 +4,17 @@ import { PORTFOLIO_PROPOSTA } from '../../data/proposta';
 import { TitleBlock, Reveal } from '../ui';
 
 /* Portfólio da proposta — recorte curado, não o acervo inteiro.
-   Grade estática em vez do carrossel da LP: aqui são oito peças escolhidas
-   para cobrir as quatro categorias, e quem lê uma proposta precisa conseguir
-   parar em cada uma. Card, hover e modal são os mesmos do PortfolioDestaques. */
-export default function PortfolioProposta() {
+
+   Grade estática em vez do carrossel da LP: quem lê uma proposta precisa
+   conseguir parar em cada peça. Card, hover e modal são os mesmos do
+   PortfolioDestaques.
+
+   A seleção vem por prop: cada cliente escolhe as peças que conversam com o
+   negócio dele. A base mostra oito cobrindo as quatro categorias.
+
+   As colunas seguem a contagem — 4 por linha quando o total é múltiplo de 4,
+   senão 3 — para a última linha não ficar com um ou dois cards órfãos. */
+export default function PortfolioProposta({ itens = PORTFOLIO_PROPOSTA.itens }) {
   const [selecionado, setSelecionado] = useState(null);
 
   return (
@@ -28,8 +35,10 @@ export default function PortfolioProposta() {
           </div>
         </Reveal>
 
-        <ul className="mt-14 grid grid-cols-2 gap-4 md:mt-16 md:gap-6 lg:grid-cols-4">
-          {PORTFOLIO_PROPOSTA.itens.map((video, i) => (
+        <ul className={`mt-14 grid grid-cols-2 gap-4 md:mt-16 md:gap-6 ${
+            itens.length % 4 === 0 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'
+          }`}>
+          {itens.map((video, i) => (
             <li key={`${video.id}-${i}`}>
               <Reveal delay={0.04 * i}>
                 <Card video={video} onClick={() => setSelecionado(video)} />

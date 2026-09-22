@@ -50,7 +50,7 @@ export default function PropostaPage() {
         <MotionBanner variante="outline" />
 
         <NossaLeitura />
-        <PortfolioProposta />
+        <PortfolioProposta itens={cliente.portfolio} />
         <Clientes />
 
         {/* Mesma trilha da LP, outra moldura: título próprio, sem a ressalva e
@@ -69,7 +69,11 @@ export default function PropostaPage() {
         <NossoOlhar cliente={cliente} />
 
         <PlanosDetalhe />
-        <PlanosSelector />
+        <PlanosSelector
+          precos={cliente.planos?.precos}
+          promos={cliente.planos?.promos}
+          inicial={cliente.planos?.inicial}
+        />
 
         {/* --- Bloco claro que fecha a página --- */}
         <FAQProposta />
