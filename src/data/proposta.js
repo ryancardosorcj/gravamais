@@ -66,16 +66,60 @@ export const CLIENTES_PROPOSTA = {
   mgsolar: {
     nome: 'MG Solar Itu',
     logo: '/proposta/logo-mgsolar.png',
+    /* Formato desenhado: cada bloco abre com uma headline e sustenta com itens
+       curtos, em vez do parágrafo único dos outros clientes. Mesma substância
+       do estudo — só destrinchada para ser lida de relance. */
     olhar: {
-      negocio:
-        'Energia solar fotovoltaica em Itu e região, atendendo residencial, comercial, industrial e rural. O mix passa ainda por sistemas híbridos e off-grid, mercado livre de energia e carregadores para veículos elétricos.',
-      diferencial:
-        'Mais de 20 anos de operação, engenheiros na equipe, projeto personalizado e acompanhamento remoto do desempenho de cada sistema. É repertório técnico que hoje a comunicação não mostra.',
-      oportunidade:
-        'A distância entre o que a empresa é e o que o digital comunica. Quem investe em solar compara fornecedor antes de pedir orçamento, e a presença atual não confirma os 20 anos de estrada.',
-      comunicacao:
-        'Conteúdo que comprove a operação — engenharia, obra e cliente atendido — no lugar de promessa de economia. Material institucional para sustentar o site, conteúdo recorrente para reativar o Instagram e peças que respondam o que trava o orçamento.',
-      direcoes: ['Autoridade', 'Prova', 'Quebra de objeções', 'Diferenciação'],
+      negocio: {
+        headline: [{ texto: 'Uma operação maior do que a comunicação mostra.' }],
+        itens: [
+          { icone: 'calendario', texto: '+20 anos de mercado' },
+          { icone: 'engrenagem', texto: 'Engenharia própria' },
+          { icone: 'predio', texto: 'Projetos residenciais, comerciais, industriais e rurais' },
+        ],
+        nota: 'Atua também com sistemas híbridos, off-grid, mercado livre e carregadores para veículos elétricos.',
+      },
+      diferencial: {
+        headline: [{ texto: 'Conhecimento técnico é um dos ativos da marca.' }],
+        itens: [
+          { icone: 'check', texto: 'Projetos personalizados' },
+          { icone: 'check', texto: 'Equipe de engenharia' },
+          { icone: 'check', texto: 'Acompanhamento próximo' },
+        ],
+        nota: 'Existe repertório e experiência para sustentar uma comunicação de autoridade.',
+      },
+      oportunidade: {
+        /* A headline quebra em três partes porque o dourado carrega o
+           diagnóstico — "o problema" e o veredito — e o meio fica em branco.
+           É a única frase da seção que discorda de uma leitura provável, então
+           ela é a que precisa de ênfase. */
+        headline: [
+          { texto: 'O problema ', gold: true },
+          { texto: 'não parece ser falta de experiência. ' },
+          { texto: 'É falta de percepção.', gold: true },
+        ],
+        icone: 'olho',
+        texto: 'Quem pesquisa energia solar encontra a MG Solar, mas o digital ainda não traduz a estrutura que existe por trás da operação.',
+      },
+      comunicacao: {
+        headline: [{ texto: 'Conteúdo que mostra o que a empresa já é.' }],
+        passos: [
+          { rotulo: 'Mostrar', texto: 'A estrutura, engenharia e operação.' },
+          { rotulo: 'Provar', texto: 'Projetos, obras e clientes reais.' },
+          { rotulo: 'Diferenciar', texto: 'Conhecimento técnico e experiência.' },
+        ],
+      },
+      direcoes: [
+        { texto: 'Autoridade', icone: 'estrela' },
+        { texto: 'Prova', icone: 'escudo' },
+        { texto: 'Quebra de objeções', icone: 'balao' },
+        { texto: 'Diferenciação', icone: 'alvo' },
+      ],
+      imagens: [
+        '/proposta/mgsolar/faixa-1.jpg',
+        '/proposta/mgsolar/faixa-2.jpg',
+        '/proposta/mgsolar/faixa-3.jpg',
+      ],
     },
     portfolio: montarPortfolio([
       'Germânia',
