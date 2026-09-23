@@ -226,6 +226,9 @@ export const CLIENTE_PADRAO = { nome: 'Sua Marca', logo: null };
 
 /* 1 · Hero --------------------------------------------------- */
 export const HERO_PROPOSTA = {
+  /* Vale para todas as propostas: é a GravaMais recebendo quem abriu a
+     página, não um texto do cliente. */
+  saudacao: 'Seja bem-vindo',
   subtitulo:
     'Uma direção audiovisual desenhada para transformar atenção em percepção de valor.',
   cta: 'Conheça a proposta',

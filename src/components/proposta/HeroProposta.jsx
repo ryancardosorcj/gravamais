@@ -62,22 +62,36 @@ export default function HeroProposta({ cliente }) {
           )}
         </motion.div>
 
-        <motion.h1
-          className="mx-auto font-display font-extrabold tracking-tight text-white"
-          style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)', lineHeight: 1.02 }}
+        {/* Amarelo sobre vídeo é `.accent-on-video` (--yellow-200), não o
+            amarelo da marca: o fundo aqui é sempre escuro. */}
+        <motion.p
+          className="accent-on-video font-display text-lg font-medium md:text-2xl"
           {...entra(0.1)}
+        >
+          {HERO_PROPOSTA.saudacao}
+        </motion.p>
+
+        {/* Caixa alta pela classe, não no dado: `cliente.nome` ainda é lido em
+            caixa mista no alt do logo e no título de "Nosso olhar". */}
+        <motion.h1
+          className="mx-auto mt-3 font-display font-extrabold uppercase tracking-tight text-white"
+          style={{ fontSize: 'clamp(2rem, 5.5vw, 4rem)', lineHeight: 1.02 }}
+          {...entra(0.16)}
         >
           {cliente.nome}
         </motion.h1>
 
+        {/* Uma linha só a partir de md. A frase mede 649px a 16px, e o
+            container tem 720px já no md — cabe com folga. Era o `md:text-lg`
+            que a quebrava: a 18px ela pede 730px e estourava por 10px. */}
         <motion.p
-          className="mx-auto mt-6 max-w-[54ch] text-base leading-relaxed text-white/80 md:text-lg"
-          {...entra(0.2)}
+          className="mx-auto mt-6 max-w-[54ch] text-base leading-relaxed text-white/80 md:max-w-none md:whitespace-nowrap"
+          {...entra(0.24)}
         >
           {HERO_PROPOSTA.subtitulo}
         </motion.p>
 
-        <motion.div className="mt-9 flex justify-center" {...entra(0.3)}>
+        <motion.div className="mt-9 flex justify-center" {...entra(0.32)}>
           <a
             href={HERO_PROPOSTA.ctaHref}
             className="btn btn-primary btn-lg w-full sm:w-auto"
