@@ -94,6 +94,33 @@ export const CLIENTES_PROPOSTA = {
       inicial: { escala: 8 },
     },
   },
+  aquila: {
+    nome: 'Espaço Áquila',
+    logo: '/proposta/logo-aquila.png',
+    olhar: {
+      negocio:
+        'Estética automotiva em Itu voltada a carros de alto padrão: polimento, higienização e lavagem. Empresa nova, com a agenda girando pelos stories e os primeiros anúncios já rodando no Meta.',
+      diferencial:
+        'O serviço é premium e a presença é diária — os stories conversam com o público e fecham horário todo dia. O acabamento da comunicação é que ainda não acompanha o padrão do carro que entra no box.',
+      oportunidade:
+        'Estética automotiva se prova na imagem: o resultado está no carro. Sendo empresa nova, é justamente a imagem que precisa sustentar o preço e vencer a desconfiança do primeiro contato.',
+      comunicacao:
+        'Registrar resultado e processo com o mesmo cuidado do serviço: antes e depois tratados, rotina do box e carros atendidos. Isso eleva o que já é publicado diariamente, dá peça profissional para o Meta e constrói a prova que uma operação nova ainda não tem.',
+      /* Sem "Autoridade": em empresa nova ela ainda não é alavanca, e prometer
+         autoridade sem lastro é o oposto do que a seção faz. Quem carrega o
+         peso aqui é a prova. "Desejo" entra porque, diferente de um serviço
+         técnico, aqui o resultado é visual e vende sozinho. */
+      direcoes: ['Desejo', 'Prova', 'Diferenciação', 'Quebra de objeções'],
+    },
+    portfolio: montarPortfolio([
+      'Germânia',
+      'Villa Maré Hotel',
+      'Lançamento Toyota',
+      'Toyota',
+      'Criativo Barbearia',
+      'Mini Serie Barbearia',
+    ]),
+  },
 };
 
 export const CLIENTE_PADRAO = { nome: 'Sua Marca', logo: null };
