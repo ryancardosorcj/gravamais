@@ -51,16 +51,71 @@ export const CLIENTES_PROPOSTA = {
   base: {
     nome: 'Sua Marca',
     logo: null,
+    /* Este é o formato do `olhar` a ser copiado numa proposta nova. Os quatro
+       blocos são fixos; o que muda de cliente para cliente é a copy e as fotos.
+
+       Cada bloco abre com `headline` e sustenta com UM dos três corpos:
+       `itens` (lista com ícone), `passos` (rótulo dourado + descrição) ou
+       `texto` (parágrafo, opcionalmente com `icone` solto acima). `nota` é o
+       rodapé em letra menor e é sempre opcional.
+
+       `headline` é uma lista de partes para poder pintar só um trecho de
+       dourado — veja o bloco 03, onde o dourado carrega o diagnóstico.
+
+       Ícones disponíveis: calendario · engrenagem · predio · check · olho
+       nas direções: estrela · escudo · balao · alvo */
     olhar: {
-      negocio:
-        'O que a empresa faz, em que mercado atua e para quem vende.',
-      diferencial:
-        'O que a empresa já faz bem e que hoje não aparece na comunicação.',
-      oportunidade:
-        'O espaço que o estudo identificou: posicionamento, autoridade, percepção de valor ou geração de demanda.',
-      comunicacao:
-        'Como o conteúdo pode trabalhar esses pontos na prática.',
-      direcoes: ['Autoridade', 'Desejo', 'Quebra de objeções', 'Diferenciação'],
+      negocio: {
+        headline: [{ texto: 'Uma frase sobre o que o estudo viu no negócio.' }],
+        itens: [
+          { icone: 'calendario', texto: 'Um fato curto — tempo de mercado' },
+          { icone: 'engrenagem', texto: 'Um fato curto — estrutura ou capacidade' },
+          { icone: 'predio', texto: 'Um fato curto — quem a empresa atende' },
+        ],
+        nota: 'O que a empresa também faz e não coube nos itens acima.',
+      },
+      diferencial: {
+        headline: [{ texto: 'O que a empresa já faz bem e hoje não aparece.' }],
+        itens: [
+          { icone: 'check', texto: 'Primeira prova desse diferencial' },
+          { icone: 'check', texto: 'Segunda prova desse diferencial' },
+          { icone: 'check', texto: 'Terceira prova desse diferencial' },
+        ],
+        nota: 'A leitura que esses pontos permitem sobre a marca.',
+      },
+      oportunidade: {
+        /* O dourado abre e fecha a frase, com o meio em branco: é a única
+           afirmação da seção que contraria uma leitura provável do cliente,
+           então é a que pede ênfase. */
+        headline: [
+          { texto: 'O problema ', gold: true },
+          { texto: 'não parece ser o que se imagina. ' },
+          { texto: 'É outra coisa.', gold: true },
+        ],
+        icone: 'olho',
+        texto: 'O espaço que o estudo identificou: posicionamento, autoridade, percepção de valor ou geração de demanda.',
+      },
+      comunicacao: {
+        headline: [{ texto: 'O que o conteúdo precisa fazer na prática.' }],
+        passos: [
+          { rotulo: 'Mostrar', texto: 'O que precisa ficar visível.' },
+          { rotulo: 'Provar', texto: 'O que precisa ser comprovado.' },
+          { rotulo: 'Diferenciar', texto: 'O que separa da concorrência.' },
+        ],
+      },
+      direcoes: [
+        { texto: 'Autoridade', icone: 'estrela' },
+        { texto: 'Desejo', icone: 'alvo' },
+        { texto: 'Quebra de objeções', icone: 'balao' },
+        { texto: 'Diferenciação', icone: 'escudo' },
+      ],
+      /* Faixas ao fundo, só de lg para cima. Na proposta real elas vêm do
+         mundo do cliente; aqui são stills de produção segurando o lugar. */
+      imagens: [
+        '/proposta/base/faixa-1.jpg',
+        '/proposta/base/faixa-2.jpg',
+        '/proposta/base/faixa-3.jpg',
+      ],
     },
   },
   mgsolar: {
