@@ -257,10 +257,10 @@ export const CLIENTES_PROPOSTA = {
             { texto: 'Análise de resultados/métricas', incluido: true },
             { texto: 'Social Media Smart', incluido: true },
             { texto: 'Reunião mensal', incluido: true },
-            { texto: 'Tráfego Pago', incluido: false },
+            { texto: 'Tráfego Pago', incluido: true },
             { texto: 'Criação de Landing Page', incluido: false },
           ],
-          preco: 2200,
+          preco: 2500,
           precoDe: 2900,
         },
         {
@@ -279,6 +279,141 @@ export const CLIENTES_PROPOSTA = {
             { texto: 'Criação de Landing Page', incluido: true },
           ],
           preco: 4400,
+        },
+      ],
+    },
+    /* Mapa mental do Áquila — réplica do mapa real do cliente (ver
+       MapaMentalRadial.jsx). Recursivo: qualquer nó pode ter `filhos`, em
+       qualquer profundidade. `icone`/`cor` só existem no nível 1 (os 5
+       galhos) — do nível 2 em diante a cor é herdada do galho, não repetida
+       aqui. `cor` aponta pra uma das --mapa-* em tokens.css.
+
+       Conteúdo real tirado dos prints do cliente para Conteúdos e Formatos,
+       Objetivos e Personas. Fotografia Profissional e o resto de Pilares de
+       Posicionamento não apareceram abertos em nenhum print — os filhos
+       abaixo são rascunho, substitua quando tiver o conteúdo real.
+
+       `filhos` não é mais consumido pelo componente (virou uma prévia
+       estática, sem abrir/fechar — ver MapaMentalRadial.jsx) — fica aqui só
+       de registro do que já foi levantado, caso volte a ser interativo.
+       `link` é a URL do mapa de verdade; o card inteiro é um `<a>` pra lá. */
+    mapaMental: {
+      centro: 'ESPAÇO ÁQUILA',
+      link: 'https://sistema.mreducacao.com/mapa/m_4aee008f7d7649738be015c2833b456b',
+      nos: [
+        {
+          id: 'conteudos',
+          lado: 'esquerda',
+          icone: 'Video',
+          cor: '--mapa-amber',
+          titulo: 'Conteúdos e Formatos',
+          filhos: [
+            {
+              id: 'conteudos-fixados',
+              titulo: 'Vídeos fixados no perfil',
+              filhos: [
+                { id: 'conteudos-fixados-1', titulo: 'Vídeo 1 — Quem somos: apresentação da empresa, história, equipe e propósito' },
+                { id: 'conteudos-fixados-2', titulo: 'Vídeo 2 — O que fazemos: principais serviços e resultados' },
+                { id: 'conteudos-fixados-3', titulo: 'Vídeo 3 — Por que escolher o Áquila: diferenciais reais, cuidado e experiência' },
+              ],
+            },
+            { id: 'conteudos-desejo', titulo: 'Vídeos de desejo e transformação' },
+            { id: 'conteudos-autoridade', titulo: 'Autoridade e diferenciação' },
+            { id: 'conteudos-serie', titulo: 'Série de conteúdo automotivo' },
+            { id: 'conteudos-prova', titulo: 'Prova social e confiança' },
+            { id: 'conteudos-objecoes', titulo: 'Quebra de objeções' },
+            { id: 'conteudos-bastidores', titulo: 'Bastidores e personalidade da marca' },
+            {
+              id: 'conteudos-resultado',
+              titulo: 'Resultado esperado: perfil mais claro, mais confiança e mais interesse pelos serviços',
+            },
+          ],
+        },
+        {
+          id: 'fotografia',
+          lado: 'esquerda',
+          icone: 'Camera',
+          cor: '--mapa-rose',
+          titulo: 'Fotografia Profissional',
+          /* Rascunho — não apareceu aberto em nenhum print do cliente. */
+          filhos: [
+            { id: 'fotografia-box', titulo: 'Carros no box/estúdio' },
+            { id: 'fotografia-detalhes', titulo: 'Detalhes de acabamento' },
+            { id: 'fotografia-equipe', titulo: 'Equipe em ação' },
+          ],
+        },
+        {
+          id: 'objetivos',
+          icone: 'Target',
+          cor: '--mapa-violet',
+          titulo: 'Objetivos',
+          filhos: [
+            {
+              id: 'objetivos-posicionamento',
+              titulo: 'Fortalecer o posicionamento da marca',
+              filhos: [{ id: 'objetivos-posicionamento-ganho', titulo: 'Ganho: ficar mais claro o valor do Áquila' }],
+            },
+            {
+              id: 'objetivos-qualidade',
+              titulo: 'Valorizar a qualidade e os diferenciais dos serviços',
+              filhos: [{ id: 'objetivos-qualidade-ganho', titulo: 'Ganho: comunicar melhor o cuidado e a entrega' }],
+            },
+            {
+              id: 'objetivos-clientes',
+              titulo: 'Atrair clientes qualificados',
+              filhos: [{ id: 'objetivos-clientes-ganho', titulo: 'Ganho: falar com quem valoriza confiança e acabamento' }],
+            },
+            {
+              id: 'objetivos-percepcao',
+              titulo: 'Aumentar a percepção de valor',
+              filhos: [{ id: 'objetivos-percepcao-ganho', titulo: 'Ganho: elevar a imagem do serviço oferecido' }],
+            },
+            {
+              id: 'objetivos-presenca',
+              titulo: 'Potencializar a presença digital existente',
+              filhos: [{ id: 'objetivos-presenca-ganho', titulo: 'Ganho: aproveitar melhor o que já aparece nas redes' }],
+            },
+            {
+              id: 'objetivos-resultado',
+              titulo: 'Resultado esperado: marca mais forte, mais confiança e mais interesse pelos serviços',
+            },
+          ],
+        },
+        {
+          id: 'personas',
+          icone: 'Users',
+          cor: '--mapa-blue',
+          titulo: 'Personas',
+          filhos: [
+            { id: 'personas-premium', titulo: 'Proprietários de veículos premium' },
+            {
+              id: 'personas-entusiastas',
+              titulo: 'Entusiastas automotivos',
+              filhos: [
+                { id: 'personas-entusiastas-perfil', titulo: 'Perfil: interessados em carros, detalhes e transformações' },
+                { id: 'personas-entusiastas-busca', titulo: 'Busca: processos, bastidores e resultado visual' },
+                { id: 'personas-entusiastas-valoriza', titulo: 'Valoriza: ver o trabalho bem feito' },
+                { id: 'personas-entusiastas-desejo', titulo: 'Desejo: acompanhar mudanças claras no veículo' },
+              ],
+            },
+            { id: 'personas-conservacao', titulo: 'Proprietários que valorizam conservação' },
+            {
+              id: 'personas-resultado',
+              titulo: 'Resultado esperado: comunicação mais certeira para atrair o cliente certo',
+            },
+          ],
+        },
+        {
+          id: 'pilares',
+          icone: 'Star',
+          cor: '--mapa-emerald',
+          titulo: 'Pilares de Posicionamento',
+          /* Rascunho — só os dois primeiros itens apareceram num print, o
+             resto da árvore ficou fora de quadro. */
+          filhos: [
+            { id: 'pilares-qualidade', titulo: 'Qualidade e atenção aos detalhes' },
+            { id: 'pilares-especializacao', titulo: 'Especialização em estética automotiva' },
+          ],
         },
       ],
     },

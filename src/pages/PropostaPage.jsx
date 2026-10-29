@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import Clientes from '../components/Clientes';
 import Footer from '../components/Footer';
 import MapaMental from '../components/MapaMental';
+import MapaMentalRadial from '../components/MapaMentalRadial';
 import MotionBanner from '../components/MotionBanner';
 import PlanosSelector from '../components/PlanosSelector';
 import WhatsAppFAB from '../components/WhatsAppFAB';
+import { Eyebrow, Reveal } from '../components/ui';
 
 import FAQProposta from '../components/proposta/FAQProposta';
 import FechoProposta from '../components/proposta/FechoProposta';
@@ -67,6 +69,29 @@ export default function PropostaPage() {
             o mapa mostra como trabalhamos, o olhar mostra que estudamos este
             cliente, e só então a proposta apresenta os caminhos. */}
         <NossoOlhar cliente={cliente} />
+
+        {/* Simulação: mapa mental radial, só quando o cliente tem um. Mesmo
+            tom escuro do bloco, sem `caixa-*` — segue dentro do mesmo bloco
+            contíguo, não abre seção nova. */}
+        {cliente.mapaMental && (
+          <section data-tone="dark" className="section relative overflow-hidden">
+            <div className="container-ds">
+              <Reveal>
+                <Eyebrow>Mapa mental</Eyebrow>
+                <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-fg-primary md:text-5xl">
+                  A estratégia, de um jeito que dá pra enxergar.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.1} className="mt-12">
+                <MapaMentalRadial
+                  centro={cliente.mapaMental.centro}
+                  nos={cliente.mapaMental.nos}
+                  link={cliente.mapaMental.link}
+                />
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         <PlanosDetalhe />
         <PlanosSelector

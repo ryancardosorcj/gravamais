@@ -131,6 +131,18 @@
   --page-bg: var(--ink-50);
   --raio-caixa: 1.75rem;
 
+  /* Paleta do MAPA MENTAL RADIAL (NossoOlhar / propostas que pedem essa
+     visualização) — a ÚNICA exceção à regra de acento único da marca. Aqui a
+     cor é o que diferencia os galhos, como na referência que o cliente
+     trouxe (uma exportação de ferramenta de mapa mental). Tons dessaturados
+     para não brigar com o limão, que continua exclusivo dos CTAs. Não usar
+     em mais nenhum componente. */
+  --mapa-amber:   #D9A441;
+  --mapa-rose:    #D9607A;
+  --mapa-violet:  #8B7FD9;
+  --mapa-blue:    #6E8FD9;
+  --mapa-emerald: #4FBF8F;
+
   color-scheme: light dark;
 }
 
