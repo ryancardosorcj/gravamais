@@ -28,7 +28,109 @@ function comOverride(padrao, override) {
   return saida;
 }
 
-export default function PlanosSelector({ precos, promos, inicial }) {
+/* `fixos` é um escape hatch PONTUAL: uma proposta pode substituir os 3
+   planos padrão (vídeo sob demanda + seletor de quantidade) por uma tabela
+   fechada — cada plano com preço único, sem dropdown de quantidade nem de
+   mídia. Usado quando o cliente negociou um pacote fixo (ver `aquila` em
+   data/proposta.js). Sem `fixos`, o comportamento de sempre continua 100%
+   intacto — nenhum cliente existente muda. */
+export default function PlanosSelector({ precos, promos, inicial, fixos }) {
+  if (fixos) return <PlanosFixos planos={fixos} />;
+
+  return <PlanosPadrao precos={precos} promos={promos} inicial={inicial} />;
+}
+
+function PlanosFixos({ planos }) {
+  return (
+    <div className="bg-black text-white py-16 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2">
+            <span className="bg-gradient-to-r from-brand to-yellow-500 bg-clip-text text-transparent">
+              Três formatos. Uma decisão de posicionamento.
+            </span>
+          </h1>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {planos.map((plan) => {
+            const isPromo = !!plan.precoDe;
+            return (
+              <div
+                key={plan.id}
+                className={`relative transition-all duration-300 ${
+                  plan.recomendado ? 'md:scale-105' : ''
+                }`}
+              >
+                {plan.recomendado && (
+                  <div className="absolute -top-4 left-6 bg-brand text-black px-4 py-1 rounded-full text-xs font-bold">
+                    Recomendado
+                  </div>
+                )}
+
+                <div
+                  className={`bg-gradient-to-br from-zinc-900 via-zinc-800 to-black border rounded-xl p-8 flex flex-col h-full ${
+                    plan.recomendado
+                      ? 'border-brand shadow-2xl shadow-yellow-500/20'
+                      : 'border-zinc-700 hover:border-brand/50'
+                  }`}
+                >
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold mb-2 text-white">{plan.nome}</h2>
+                    {plan.descricao && (
+                      <p className="text-sm text-gray-400 leading-relaxed">{plan.descricao}</p>
+                    )}
+                  </div>
+
+                  <div className="flex-grow mb-8">
+                    {plan.itens.map((item, idx) =>
+                      item.incluido === false ? (
+                        <div key={idx} className="mb-3 flex items-start gap-3 opacity-50">
+                          <span className="text-brand text-lg mt-0">•</span>
+                          <span className="text-gray-500 line-through">{item.texto}</span>
+                        </div>
+                      ) : (
+                        <div key={idx} className="mb-3 flex items-start gap-3">
+                          <span className="text-brand text-lg mt-0">•</span>
+                          <span className="text-gray-300">{item.texto}</span>
+                        </div>
+                      ),
+                    )}
+                  </div>
+
+                  <div className="border-t border-zinc-700 pt-6 text-center">
+                    {isPromo && (
+                      <div className="text-sm text-gray-500 line-through mb-2">
+                        R${plan.precoDe.toLocaleString('pt-BR')}
+                      </div>
+                    )}
+                    <div
+                      className={`text-3xl font-bold mb-4 ${
+                        isPromo ? 'text-green-500 text-4xl animate-pulse' : 'text-brand'
+                      }`}
+                    >
+                      R${plan.preco.toLocaleString('pt-BR')}
+                    </div>
+                    <button className="w-full bg-brand text-black font-bold py-3 rounded-lg hover:scale-105 transition-transform duration-200">
+                      Escolher Plano
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <p className="mt-14 max-w-[64ch] border-t border-zinc-800 pt-6 text-xs leading-relaxed text-gray-500">
+          O ESSENCIAL é onde a maioria das marcas acelera. ESCALA para começar;
+          PRO para escalar. O escopo final é validado antes do início.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function PlanosPadrao({ precos, promos, inicial }) {
   const PRECO_TAB = comOverride(PRECOS, precos);
   const PROMO_TAB = comOverride(PROMOS, promos);
 

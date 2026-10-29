@@ -219,6 +219,69 @@ export const CLIENTES_PROPOSTA = {
       'Criativo Barbearia',
       'Mini Serie Barbearia',
     ]),
+    /* Pacote fechado, negociado com o Áquila: preço único por plano, sem o
+       seletor de quantidade de vídeos do padrão (ver `fixos` em
+       PlanosSelector.jsx). Os itens "não incluídos" do START ficam riscados
+       de propósito — mostram o que o cliente ganha ao subir de plano, mesmo
+       padrão visual que o seletor já usava. */
+    planos: {
+      fixos: [
+        {
+          id: 'start',
+          nome: 'START',
+          itens: [
+            { texto: '4 vídeos', incluido: true },
+            { texto: 'Meia diária', incluido: true },
+            { texto: 'Fotografias', incluido: true },
+            { texto: 'Roteiros', incluido: true },
+            { texto: 'Capas para Reels', incluido: false },
+            { texto: 'Estratégia', incluido: false },
+            { texto: 'Análise de resultados/métricas', incluido: false },
+            { texto: 'Social Media Smart', incluido: false },
+            { texto: 'Reunião mensal', incluido: false },
+            { texto: 'Tráfego Pago', incluido: false },
+            { texto: 'Criação de Landing Page', incluido: false },
+          ],
+          preco: 1800,
+        },
+        {
+          id: 'essencial',
+          nome: 'ESSENCIAL',
+          recomendado: true,
+          itens: [
+            { texto: '6 vídeos', incluido: true },
+            { texto: 'Meia diária', incluido: true },
+            { texto: 'Fotografias', incluido: true },
+            { texto: 'Capas para Reels', incluido: true },
+            { texto: 'Estratégia e roteiros', incluido: true },
+            { texto: 'Análise de resultados/métricas', incluido: true },
+            { texto: 'Social Media Smart', incluido: true },
+            { texto: 'Reunião mensal', incluido: true },
+            { texto: 'Tráfego Pago', incluido: false },
+            { texto: 'Criação de Landing Page', incluido: false },
+          ],
+          preco: 2200,
+          precoDe: 2900,
+        },
+        {
+          id: 'pro',
+          nome: 'PRO',
+          itens: [
+            { texto: '8 vídeos', incluido: true },
+            { texto: 'Uma diária', incluido: true },
+            { texto: 'Fotografias', incluido: true },
+            { texto: 'Capas para Reels', incluido: true },
+            { texto: 'Estratégia e roteiros', incluido: true },
+            { texto: 'Análise de resultados/métricas', incluido: true },
+            { texto: 'Social Media/Design', incluido: true },
+            { texto: 'Reunião mensal', incluido: true },
+            { texto: 'Tráfego Pago (Completo)', incluido: true },
+            { texto: 'Criação de Landing Page', incluido: true },
+          ],
+          preco: 4400,
+        },
+      ],
+    },
   },
 };
 

@@ -73,6 +73,7 @@ export default function PropostaPage() {
           precos={cliente.planos?.precos}
           promos={cliente.planos?.promos}
           inicial={cliente.planos?.inicial}
+          fixos={cliente.planos?.fixos}
         />
 
         {/* --- Bloco claro que fecha a página --- */}
