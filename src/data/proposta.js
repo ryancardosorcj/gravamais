@@ -193,6 +193,262 @@ export const CLIENTES_PROPOSTA = {
       inicial: { escala: 8 },
     },
   },
+  /* Proposta de PROJETO ÚNICO, não de plano: a chave `projeto` troca o trecho
+     "leitura → portfólio → método → olhar → planos" da página pelo escopo e o
+     roteiro do vídeo (ver ProjetoProposta.jsx). Sem `olhar` de propósito — o
+     cliente já é recorrente e o estudo dele não foi escrito.
+
+     Abreviação: PP Alumínio é PPA, nunca "PP".
+
+     As imagens do storyboard (public/proposta/ppaluminio/cena-N.jpg) são
+     REFERÊNCIA de enquadramento, não material da PPA. */
+  'pp-aluminio-retrospectiva': {
+    nome: 'PP Alumínio',
+    logo: '/clientes/ppa-aluminio.webp',
+    /* Mesmo player do hero, outro vídeo: "Institucional PP Alumínio". */
+    vslId: 'fcd22f05-9934-46fd-829a-8453773af15d',
+    projeto: {
+      escopo: {
+        eyebrow: 'Escopo do orçamento',
+        titulo: ['Orçamento 01 - Retrospectiva 2026 PP Alumínio', 'Somos parte dessa história.'],
+        destaque: 1,
+        lead: 'Relembrar o início de 2026, que foi o marco das mudanças, os principais momentos do ano e as conquistas, valorizando as pessoas e reforçando o sentimento de pertencimento, união e orgulho de fazer parte da empresa.',
+        ficha: [
+          { rotulo: 'Duração', valor: 'Até 3 minutos' },
+          { rotulo: 'Público-alvo', valor: 'Todos os colaboradores da PPA' },
+          { rotulo: 'Tema', valor: '2026: uma história construída por muitas mãos' },
+          { rotulo: 'Conceito', valor: 'Somos parte dessa história' },
+        ],
+        entregasRotulo: 'O que está incluso',
+        entregas: [
+          'Roteiro e direção da retrospectiva, com até 3 minutos',
+          'Depoimentos de 5 a 6 colaboradores, de diferentes áreas',
+          'Edição com as imagens e fotos da PPA, retratos e mosaico dos colaboradores',
+          'Textos na tela, trilha e finalização',
+          'Banco de imagens captado na próxima captação mensal',
+        ],
+        resultado:
+          'Um vídeo que emocione, gere identificação e orgulho nos colaboradores, valorize o trabalho do ano e transmita que cada pessoa contribui para o crescimento da PPA.',
+      },
+      conteudos: {
+        eyebrow: 'Conteúdos do vídeo',
+        titulo: ['O que precisa', 'aparecer na tela.'],
+        destaque: 1,
+        itens: [
+          { icone: 'pessoas', rotulo: 'Colaboradores' },
+          { icone: 'calendario', rotulo: 'Eventos' },
+          { icone: 'livro', rotulo: 'Treinamentos' },
+          { icone: 'engrenagem', rotulo: 'Novos projetos' },
+          { icone: 'estrela', rotulo: 'Conquistas' },
+          { icone: 'filme', rotulo: 'Bastidores' },
+          { icone: 'sorriso', rotulo: 'Momentos engraçados' },
+          { icone: 'pacote', rotulo: 'Novos produtos' },
+          { icone: 'pessoas', rotulo: 'Fotos das equipes' },
+        ],
+        materiaisRotulo: 'Materiais que a PPA disponibiliza',
+        materiaisLead: 'Um link do drive com os registros alinhados. Priorizamos imagens reais, de boa qualidade, com todos os setores representados.',
+        materiais: [
+          'Fotos e vídeos dos principais acontecimentos de 2026',
+          'Registros de eventos, treinamentos e reuniões',
+          'Fotos de equipes e colaboradores',
+          'Imagens de bastidores e momentos descontraídos',
+          'Registros de lançamentos, novos produtos e projetos',
+          'Vídeos curtos que enriqueçam a edição',
+          'Foto de todos os colaboradores, para o mosaico final',
+        ],
+      },
+      depoimentos: {
+        eyebrow: 'Direção dos depoimentos',
+        foto: '/proposta/ppaluminio/depoimento.jpg',
+        titulo: ['Poucas vozes,', 'bem escolhidas.'],
+        destaque: 1,
+        numeros: [
+          { valor: '5 a 6', legenda: 'Colaboradores' },
+          { valor: '8 a 11 s', legenda: 'De fala por pessoa, na edição final' },
+          { valor: '~3 min', legenda: 'De vídeo' },
+        ],
+        areasRotulo: 'Áreas representadas',
+        areas: ['Atendimento', 'Comercial', 'Estoque', 'Expedição', 'Administrativo', 'Mais tempo de casa'],
+        pontos: [
+          'Entrevistas conduzidas com perguntas simples, em busca de respostas naturais e espontâneas.',
+          'Durante as falas, imagens de cobertura dos colaboradores trabalhando e interagindo.',
+          'Retratos individuais e registros das equipes, para valorizar visualmente quem faz parte da empresa.',
+        ],
+        nota: 'A ideia não é transformar o vídeo em uma sequência de entrevistas. Os depoimentos entram como parte da narrativa, mantendo o equilíbrio entre pessoas, acontecimentos, conquistas e momentos do ano.',
+      },
+      roteiro: {
+        eyebrow: 'Storyboard · sugestão de roteiro',
+        titulo: ['O vídeo,', 'cena a cena.'],
+        destaque: 1,
+        lead: 'Uma sugestão de roteiro, para referência. As imagens mostram o enquadramento pretendido; a versão final é ajustada ao material da PPA e às falas captadas.',
+        blocos: [
+          {
+            inicio: '00:00',
+            fim: '00:20',
+            segundos: 20,
+            titulo: 'Abertura',
+            imagem: 'Cenas da empresa, colaboradores chegando, produção, galpão e detalhes da rotina. Planos mais amplos e imagens marcantes do ano.',
+            narracao: 'Um ano é feito de desafios, mudanças, aprendizados e conquistas. E cada momento deixa sua marca na nossa história.',
+            foto: '/proposta/ppaluminio/cena-1.jpg',
+          },
+          {
+            inicio: '00:20',
+            fim: '01:00',
+            segundos: 40,
+            titulo: 'Pessoas que fazem acontecer',
+            imagem: 'Depoimentos de colaboradores, intercalados com cenas de cada setor em atividade, interação entre colegas, trabalho em equipe e retratos dos funcionários.',
+            perguntas: [
+              'O que mais te marcou na sua experiência na PPA neste ano?',
+              'O que significa fazer parte dessa equipe?',
+              'O que precisa acontecer nos bastidores para tudo funcionar bem?',
+            ],
+            foto: '/proposta/ppaluminio/cena-2.jpg',
+          },
+          {
+            inicio: '01:00',
+            fim: '01:35',
+            segundos: 35,
+            titulo: 'Evolução e conquistas',
+            imagem: 'Eventos, treinamentos, reuniões, desenvolvimento de lideranças, melhorias e momentos importantes do ano.',
+            depoimento: 'Colaborador com mais tempo de empresa contando sobre mudanças e evolução.',
+            perguntas: ['Quando você olha para a PPA hoje, o que mais mudou desde que chegou?'],
+            foto: '/proposta/ppaluminio/cena-3.jpg',
+          },
+          {
+            inicio: '01:35',
+            fim: '02:10',
+            segundos: 35,
+            titulo: 'Inovação e novos caminhos',
+            imagem: 'Lançamentos, novos produtos, novos projetos, feiras, congressos, treinamentos e conquistas.',
+            depoimento: 'Colaborador contando sobre alguma mudança ou conquista que marcou 2026.',
+            perguntas: ['Qual conquista ou mudança deste ano mais te marcou?'],
+            foto: '/proposta/ppaluminio/cena-4.jpg',
+          },
+          {
+            inicio: '02:10',
+            fim: '02:35',
+            segundos: 25,
+            titulo: 'Bastidores e momentos especiais',
+            imagem: 'Sequência mais leve: momentos descontraídos, sorrisos, brincadeiras, cumprimentos, fotos coletivas e registros espontâneos dos colaboradores.',
+            foto: '/proposta/ppaluminio/cena-5.jpg',
+          },
+          {
+            inicio: '02:35',
+            fim: '03:00',
+            segundos: 25,
+            titulo: 'Encerramento: gratidão e futuro',
+            imagem: 'Fotos de equipes, retratos individuais e mosaico com os colaboradores, seguidos de uma sequência de imagens marcantes do ano. A música cresce emocionalmente.',
+            mensagem: 'Nada disso acontece sozinho. A cada colaborador, nosso muito obrigado por fazer parte dessa história. E em 2027 teremos muito mais desafios...',
+            complemento: 'Seguimos juntos. O próximo capítulo começa com cada um de nós!',
+            foto: '/proposta/ppaluminio/cena-6.jpg',
+          },
+        ],
+      },
+      entrevista: {
+        eyebrow: 'Guia de entrevista',
+        titulo: ['Perguntas simples,', 'respostas reais.'],
+        destaque: 1,
+        lead: 'As perguntas serão direcionadas conforme o perfil de cada colaborador e o setor que ele representa.',
+        perguntas: [
+          'O que mais te marcou na PP Alumínio em 2026?',
+          'Qual conquista ou mudança deste ano mais te deixou orgulhoso?',
+          'O que significa fazer parte dessa equipe?',
+          'Quando você olha para a PPA hoje, o que mais mudou desde que chegou?',
+          'O que você espera para o próximo ano?',
+        ],
+        recomendacaoRotulo: 'Nossa recomendação',
+        recomendacoes: [
+          {
+            titulo: [
+              { texto: 'Não fechar previamente ' },
+              { texto: 'todas as falas.', gold: true },
+            ],
+            texto:
+              'A qualidade do vídeo depende das respostas que conseguirmos captar. A entrevista deve buscar histórias e sentimentos reais, e a edição seleciona os trechos que melhor se conectam ao conceito "Somos parte dessa história".',
+          },
+          {
+            titulo: [
+              { texto: 'Dar espaço às ' },
+              { texto: 'pessoas', gold: true },
+              { texto: ' na edição.' },
+            ],
+            texto:
+              'Não só a eventos e produtos: os momentos espontâneos fazem a retrospectiva mais marcante quando cada colaborador consegue se reconhecer nela e sentir que também faz parte das conquistas da PPA.',
+          },
+        ],
+        mensagemCentral:
+          'Mais do que relembrar o que aconteceu em 2026, queremos reconhecer quem fez tudo acontecer e inspirar todos a continuarem construindo essa história em 2027.',
+      },
+      investimento: {
+        eyebrow: 'Investimento',
+        titulo: ['Um valor', 'para o projeto todo.'],
+        destaque: 1,
+        valor: 1300,
+        legenda: 'Retrospectiva 2026 PP Alumínio',
+        condicoes: [
+          'O banco de imagens necessário será captado na próxima captação mensal, sem uma diária extra.',
+          'A PPA disponibiliza o drive com os registros de 2026 e as fotos dos colaboradores para o mosaico.',
+        ],
+      },
+    },
+    /* Segundo orçamento da PPA, na mesma página, logo abaixo do primeiro.
+       Fundo claro: rótulos em --brand-ink (ocre), porque o dourado fixo não lê
+       sobre branco. Destaques em caixa amarela (--brand). Títulos de seção são
+       rascunho a revisar. */
+    projeto2: {
+      escopo: {
+        titulo: ['Orçamento 02 - Vídeo institucional e comercial', 'Aura System e Chroma'],
+        lead: 'Apresentar brevemente a PPA Alumínio e destacar os diferenciais dos sistemas Aura System e Chroma, demonstrando suas aplicações em projetos de arquitetura de alto padrão.',
+        ficha: [
+          { rotulo: 'Duração', valor: 'Até 1 minuto' },
+          { rotulo: 'Público-alvo', valor: 'Arquitetos, engenheiros, serralheiros, vidraceiros e especificadores' },
+          { rotulo: 'Entrega', valor: 'Alta resolução, para a palestra, com textos na tela' },
+          { rotulo: 'Assinaturas', valor: 'PPA, Sta Terezinha, Aura System e Chroma' },
+        ],
+        mensagem:
+          'Apresentar os lançamentos da PPA e posicioná-la como parceira da arquitetura de alto padrão, conectando design, tecnologia e desempenho por meio de duas soluções que atendem a diferentes propostas de projeto.',
+      },
+      conteudos: {
+        eyebrow: 'Estrutura do vídeo',
+        titulo: ['Cinco blocos,', 'uma sequência.'],
+        itens: [
+          'Apresentação da PPA',
+          'Aura System',
+          'Chroma',
+          'Obras e aplicações',
+          'Encerramento',
+        ],
+      },
+      /* Divisor entre Chroma e Direção: o produto em largura total. */
+      banner: {
+        src: '/proposta/ppaluminio/aura-chroma/chroma-banner.jpg',
+        alt: 'Logo Chroma e perfil de alumínio do sistema',
+      },
+      direcao: {
+        eyebrow: 'Direção criativa',
+        titulo: ['Sofisticada e moderna.'],
+        lead: 'Estética alinhada ao mercado de alto padrão, com arquitetura contemporânea, detalhes dos produtos, trilha sonora elegante e transições suaves.',
+        elementos: [
+          'Arquitetura contemporânea',
+          'Detalhes dos produtos',
+          'Trilha sonora elegante',
+          'Transições suaves',
+          'Textos curtos na tela',
+        ],
+        /* Obras entram aqui como aplicação da direção, em par. */
+        imagens: [
+          { src: '/proposta/ppaluminio/aura-chroma/obra-exterior.jpg', alt: 'Residência com fachada em madeira e área de lazer' },
+          { src: '/proposta/ppaluminio/aura-chroma/obra-interior.jpg', alt: 'Sala com teto de madeira e esquadrias de correr' },
+        ],
+      },
+      investimento: {
+        eyebrow: 'Investimento',
+        titulo: ['Um valor para a edição.'],
+        valor: 400,
+        legenda: 'Vídeo institucional e comercial — Aura System e Chroma',
+      },
+    },
+  },
   aquila: {
     nome: 'Espaço Áquila',
     logo: '/proposta/logo-aquila.png',

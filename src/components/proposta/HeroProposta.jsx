@@ -24,7 +24,7 @@ export default function HeroProposta({ cliente }) {
     >
       <iframe
         className="video-cover"
-        src={`https://player.mediadelivery.net/embed/753229/${HERO_PROPOSTA.vslId}?autoplay=true&loop=true&muted=true&controls=false&responsive=true`}
+        src={`https://player.mediadelivery.net/embed/753229/${cliente.vslId ?? HERO_PROPOSTA.vslId}?autoplay=true&loop=true&muted=true&controls=false&responsive=true`}
         title="Vídeo da GravaMais em plano de fundo"
         tabIndex={-1}
         aria-hidden="true"

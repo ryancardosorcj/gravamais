@@ -16,6 +16,8 @@ import NossaLeitura from '../components/proposta/NossaLeitura';
 import NossoOlhar from '../components/proposta/NossoOlhar';
 import PlanosDetalhe from '../components/proposta/PlanosDetalhe';
 import PortfolioProposta from '../components/proposta/PortfolioProposta';
+import OrcamentoProposta from '../components/proposta/OrcamentoProposta';
+import ProjetoProposta from '../components/proposta/ProjetoProposta';
 
 import { CLIENTES_PROPOSTA, CLIENTE_PADRAO, METODO_PROPOSTA } from '../data/proposta';
 
@@ -51,59 +53,75 @@ export default function PropostaPage() {
         {/* Costura entre o hero e o texto — o ticker escuro segura a virada. */}
         <MotionBanner variante="outline" />
 
-        <NossaLeitura />
-        <PortfolioProposta itens={cliente.portfolio} />
-        <Clientes />
+        {/* Proposta de projeto único (`cliente.projeto`): o escopo e o roteiro do
+            vídeo ocupam o lugar de leitura, método, olhar e planos. O preço
+            fica no fim de cada orçamento, sem PlanosSelector. */}
+        {cliente.projeto ? (
+          <>
+            <ProjetoProposta projeto={cliente.projeto} />
+            {/* Segundo orçamento, em fundo claro, logo abaixo do investimento
+                do primeiro. Quando existe, ele abre o bloco claro e o Fecho só
+                fecha — sem `caixa-topo` no Fecho. */}
+            {cliente.projeto2 && <OrcamentoProposta dados={cliente.projeto2} />}
+            <FechoProposta caixa={cliente.projeto2 ? 'caixa-pe' : 'caixa-topo caixa-pe'} />
+          </>
+        ) : (
+          <>
+          <NossaLeitura />
+          <PortfolioProposta itens={cliente.portfolio} />
+          <Clientes />
 
-        {/* Mesma trilha da LP, outra moldura: título próprio, sem a ressalva e
-            sem `caixa-topo`, porque aqui ela não abre o bloco escuro. */}
-        <MapaMental
-          titulo={METODO_PROPOSTA.titulo}
-          destaque={METODO_PROPOSTA.destaque}
-          lead={METODO_PROPOSTA.lead}
-          ressalva={null}
-          caixa=""
-        />
+          {/* Mesma trilha da LP, outra moldura: título próprio, sem a ressalva e
+              sem `caixa-topo`, porque aqui ela não abre o bloco escuro. */}
+          <MapaMental
+            titulo={METODO_PROPOSTA.titulo}
+            destaque={METODO_PROPOSTA.destaque}
+            lead={METODO_PROPOSTA.lead}
+            ressalva={null}
+            caixa=""
+          />
 
-        {/* A leitura daquela empresa entra DEPOIS do método e ANTES dos planos:
-            o mapa mostra como trabalhamos, o olhar mostra que estudamos este
-            cliente, e só então a proposta apresenta os caminhos. */}
-        <NossoOlhar cliente={cliente} />
+          {/* A leitura daquela empresa entra DEPOIS do método e ANTES dos planos:
+              o mapa mostra como trabalhamos, o olhar mostra que estudamos este
+              cliente, e só então a proposta apresenta os caminhos. */}
+          <NossoOlhar cliente={cliente} />
 
-        {/* Simulação: mapa mental radial, só quando o cliente tem um. Mesmo
-            tom escuro do bloco, sem `caixa-*` — segue dentro do mesmo bloco
-            contíguo, não abre seção nova. */}
-        {cliente.mapaMental && (
-          <section data-tone="dark" className="section relative overflow-hidden">
-            <div className="container-ds">
-              <Reveal>
-                <Eyebrow>Mapa mental</Eyebrow>
-                <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-fg-primary md:text-5xl">
-                  A estratégia, de um jeito que dá pra enxergar.
-                </h2>
-              </Reveal>
-              <Reveal delay={0.1} className="mt-12">
-                <MapaMentalRadial
-                  centro={cliente.mapaMental.centro}
-                  nos={cliente.mapaMental.nos}
-                  link={cliente.mapaMental.link}
-                />
-              </Reveal>
-            </div>
-          </section>
+          {/* Simulação: mapa mental radial, só quando o cliente tem um. Mesmo
+              tom escuro do bloco, sem `caixa-*` — segue dentro do mesmo bloco
+              contíguo, não abre seção nova. */}
+          {cliente.mapaMental && (
+            <section data-tone="dark" className="section relative overflow-hidden">
+              <div className="container-ds">
+                <Reveal>
+                  <Eyebrow>Mapa mental</Eyebrow>
+                  <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold leading-[1.1] tracking-tight text-fg-primary md:text-5xl">
+                    A estratégia, de um jeito que dá pra enxergar.
+                  </h2>
+                </Reveal>
+                <Reveal delay={0.1} className="mt-12">
+                  <MapaMentalRadial
+                    centro={cliente.mapaMental.centro}
+                    nos={cliente.mapaMental.nos}
+                    link={cliente.mapaMental.link}
+                  />
+                </Reveal>
+              </div>
+            </section>
+          )}
+
+          <PlanosDetalhe />
+          <PlanosSelector
+            precos={cliente.planos?.precos}
+            promos={cliente.planos?.promos}
+            inicial={cliente.planos?.inicial}
+            fixos={cliente.planos?.fixos}
+          />
+
+          {/* --- Bloco claro que fecha a página --- */}
+          <FAQProposta />
+          <FechoProposta />
+          </>
         )}
-
-        <PlanosDetalhe />
-        <PlanosSelector
-          precos={cliente.planos?.precos}
-          promos={cliente.planos?.promos}
-          inicial={cliente.planos?.inicial}
-          fixos={cliente.planos?.fixos}
-        />
-
-        {/* --- Bloco claro que fecha a página --- */}
-        <FAQProposta />
-        <FechoProposta />
       </main>
 
       <Footer />

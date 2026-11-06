@@ -41,7 +41,7 @@ function WhatsAppIcon({ size = 18 }) {
    Tom CLARO com `caixa-pe`, fechando o bloco que o FAQ abriu — é o mesmo
    arranjo do fim da LP (CTA claro, depois o rodapé escuro). Por isso a
    assinatura aqui é a logo PRETA: a branca sumiria no fundo. */
-export default function FechoProposta() {
+export default function FechoProposta({ caixa = 'caixa-pe' }) {
   const contatos = [
     {
       icone: WhatsAppIcon,
@@ -64,7 +64,7 @@ export default function FechoProposta() {
   ];
 
   return (
-    <section id="contato" data-tone="light" className="caixa-pe section relative overflow-hidden">
+    <section id="contato" data-tone="light" className={`${caixa} section relative overflow-hidden`}>
       <div className="container-ds">
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
