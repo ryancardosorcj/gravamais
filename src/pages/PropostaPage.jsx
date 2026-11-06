@@ -16,6 +16,7 @@ import NossaLeitura from '../components/proposta/NossaLeitura';
 import NossoOlhar from '../components/proposta/NossoOlhar';
 import PlanosDetalhe from '../components/proposta/PlanosDetalhe';
 import PortfolioProposta from '../components/proposta/PortfolioProposta';
+import ConfraternizacaoProposta from '../components/proposta/ConfraternizacaoProposta';
 import OrcamentoProposta from '../components/proposta/OrcamentoProposta';
 import ProjetoProposta from '../components/proposta/ProjetoProposta';
 
@@ -62,8 +63,17 @@ export default function PropostaPage() {
             {/* Segundo orçamento, em fundo claro, logo abaixo do investimento
                 do primeiro. Quando existe, ele abre o bloco claro e o Fecho só
                 fecha — sem `caixa-topo` no Fecho. */}
-            {cliente.projeto2 && <OrcamentoProposta dados={cliente.projeto2} />}
-            <FechoProposta caixa={cliente.projeto2 ? 'caixa-pe' : 'caixa-topo caixa-pe'} />
+            {cliente.projeto2 && (
+              <OrcamentoProposta dados={cliente.projeto2} fechaBloco={!!cliente.projeto3} />
+            )}
+            {/* Terceiro orçamento volta ao fundo preto. Entra depois do claro
+                e antes do Fecho, que então abre um bloco claro novo. */}
+            {cliente.projeto3 && <ConfraternizacaoProposta dados={cliente.projeto3} />}
+            <FechoProposta
+              caixa={
+                cliente.projeto2 && !cliente.projeto3 ? 'caixa-pe' : 'caixa-topo caixa-pe'
+              }
+            />
           </>
         ) : (
           <>

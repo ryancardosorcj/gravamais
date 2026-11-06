@@ -41,7 +41,7 @@ function Titulo({ linhas }) {
   );
 }
 
-export default function OrcamentoProposta({ dados }) {
+export default function OrcamentoProposta({ dados, fechaBloco = false }) {
   const { escopo, conteudos, banner, direcao, investimento } = dados;
 
   return (
@@ -50,7 +50,7 @@ export default function OrcamentoProposta({ dados }) {
       <Conteudos dados={conteudos} />
       <Banner dados={banner} />
       <Direcao dados={direcao} />
-      <Investimento dados={investimento} />
+      <Investimento dados={investimento} fechaBloco={fechaBloco} />
     </>
   );
 }
@@ -192,9 +192,13 @@ function Direcao({ dados }) {
 
 /* 4 · Investimento — mesma moldura do preço do orçamento 01: texto à
    esquerda, cartão do preço à direita. O cartão é amarelo. */
-function Investimento({ dados }) {
+function Investimento({ dados, fechaBloco }) {
   return (
-    <section id="investimento-2" data-tone="light" className={SECAO}>
+    <section
+      id="investimento-2"
+      data-tone="light"
+      className={`${SECAO} ${fechaBloco ? 'caixa-pe' : ''}`}
+    >
       <div className="container-ds">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
           <Reveal>

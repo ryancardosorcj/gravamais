@@ -205,6 +205,8 @@ export const CLIENTES_PROPOSTA = {
   'pp-aluminio-retrospectiva': {
     nome: 'PP Alumínio',
     logo: '/clientes/ppa-aluminio.webp',
+    /* O botão da hero desce até o escopo do orçamento 01. */
+    ctaHref: '#escopo',
     /* Mesmo player do hero, outro vídeo: "Institucional PP Alumínio". */
     vslId: 'fcd22f05-9934-46fd-829a-8453773af15d',
     projeto: {
@@ -214,10 +216,8 @@ export const CLIENTES_PROPOSTA = {
         destaque: 1,
         lead: 'Relembrar o início de 2026, que foi o marco das mudanças, os principais momentos do ano e as conquistas, valorizando as pessoas e reforçando o sentimento de pertencimento, união e orgulho de fazer parte da empresa.',
         ficha: [
-          { rotulo: 'Duração', valor: 'Até 3 minutos' },
-          { rotulo: 'Público-alvo', valor: 'Todos os colaboradores da PPA' },
-          { rotulo: 'Tema', valor: '2026: uma história construída por muitas mãos' },
-          { rotulo: 'Conceito', valor: 'Somos parte dessa história' },
+          { rotulo: 'Duração', valor: 'Até 3 minutos', icone: 'relogio' },
+          { rotulo: 'Público-alvo', valor: 'Todos os colaboradores da PPA', icone: 'pessoas' },
         ],
         entregasRotulo: 'O que está incluso',
         entregas: [
@@ -446,6 +446,59 @@ export const CLIENTES_PROPOSTA = {
         titulo: ['Um valor para a edição.'],
         valor: 400,
         legenda: 'Vídeo institucional e comercial — Aura System e Chroma',
+      },
+    },
+    /* Terceiro orçamento: cobertura da confraternização, em fundo PRETO.
+       Duas opções de preço, conforme o briefing. A de maior cobertura fica em
+       caixa amarela. Título de seção é rascunho a revisar. */
+    projeto3: {
+      escopo: {
+        titulo: ['Orçamento 03 - Cobertura da Confraternização', '18 de dezembro · meia diária'],
+        lead: 'Cobertura de meia diária da confraternização da PPA Alumínio, para registrar os principais momentos, a equipe e os convidados.',
+        ficha: [
+          { rotulo: 'Data', valor: '18/12' },
+          { rotulo: 'Horário', valor: 'Das 12h às 16h' },
+          { rotulo: 'Duração da cobertura', valor: 'Meia diária (4 horas)' },
+        ],
+      },
+      /* Divisor com a foto do brinde, logo após o escopo. */
+      fotoBrinde: {
+        src: '/proposta/ppaluminio/confraternizacao/brinde.jpg',
+        alt: 'Colaboradores brindando durante a confraternização',
+      },
+      opcoes: {
+        eyebrow: 'Investimento',
+        titulo: ['Duas opções', 'de cobertura.'],
+        itens: [
+          {
+            id: 'a',
+            nome: 'Opção A',
+            valor: 1700,
+            destaque: true,
+            captacao: 'Câmera profissional, drone e celular',
+            entregas: [
+              '1 vídeo Aftermovie com os principais momentos da confraternização',
+              'Cobertura de Stories em tempo real, com registros e publicações durante o evento',
+              'Fotografias dos principais momentos, equipe e convidados',
+            ],
+          },
+          {
+            id: 'b',
+            nome: 'Opção B',
+            valor: 1400,
+            destaque: false,
+            captacao: 'Câmera profissional e drone',
+            entregas: [
+              '1 vídeo Aftermovie com os principais momentos da confraternização',
+              'Fotografias dos principais momentos, equipe e convidados',
+            ],
+          },
+        ],
+      },
+      /* Divisor final com a foto do jardim; fecha o bloco escuro. */
+      fotoJardim: {
+        src: '/proposta/ppaluminio/confraternizacao/jardim.jpg',
+        alt: 'Convidados em confraternização no jardim',
       },
     },
   },

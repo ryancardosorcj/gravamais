@@ -2,6 +2,7 @@ import {
   BookOpen,
   CalendarDays,
   CircleCheck,
+  Clock,
   Clapperboard,
   Cog,
   Package,
@@ -23,6 +24,8 @@ import { Reveal, TitleBlock } from '../ui';
 
    Conteúdo todo em `cliente.projeto` (data/proposta.js). Cada seção some se
    o bloco dela não existir, então um projeto menor não renderiza vazio. */
+
+const ICONES_FICHA = { relogio: Clock, pessoas: Users };
 
 const ICONES = {
   pessoas: Users,
@@ -70,52 +73,65 @@ function Titulo({ dados }) {
 }
 
 /* 1 · Escopo --------------------------------------------------- */
+/* Título na largura toda; embaixo, duas colunas que começam na mesma linha.
+   Esquerda: objetivo, ficha em linhas de rótulo e valor, resultado.
+   Direita: o que está incluso. As colunas se equilibram em altura. */
 function Escopo({ dados }) {
   return (
     <section id="escopo" data-tone="dark" className="section relative overflow-hidden">
       <div className="container-ds">
-        <div className="grid gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+        <Reveal>
+          <Eyebrow>{dados.eyebrow}</Eyebrow>
+          <h2 className="mt-6 max-w-4xl font-display font-extrabold tracking-tight text-balance text-fg-primary">
+            <span className="block text-3xl leading-[1.1] md:text-5xl">{dados.titulo[0]}</span>
+            <span className="mt-4 block text-xl font-semibold text-gold md:text-2xl">
+              {dados.titulo[1]}
+            </span>
+          </h2>
+        </Reveal>
+
+        <div className="mt-14 grid gap-14 border-t border-subtle pt-14 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <Eyebrow>{dados.eyebrow}</Eyebrow>
-            <h2 className="mt-6 font-display font-extrabold tracking-tight text-fg-primary">
-              <span className="block text-3xl leading-[1.1] md:text-5xl">{dados.titulo[0]}</span>
-              <span className="mt-4 block text-xl font-semibold text-gold md:text-2xl">
-                {dados.titulo[1]}
-              </span>
-            </h2>
-            <p className="mt-8 max-w-[56ch] text-sm leading-relaxed text-fg-muted md:text-base">
+            <p className="max-w-[52ch] text-sm leading-relaxed text-fg-muted md:text-base">
               {dados.lead}
             </p>
 
-            <dl className="mt-12 grid gap-x-10 gap-y-8 border-t border-subtle pt-10 sm:grid-cols-2">
-              {dados.ficha.map(({ rotulo, valor }) => (
-                <div key={rotulo}>
-                  <dt className="font-mono text-2xs uppercase tracking-[0.2em] text-fg-subtle">
-                    {rotulo}
-                  </dt>
-                  <dd className="mt-2.5 font-display text-xl font-bold leading-snug text-fg-primary md:text-2xl">
-                    {valor}
-                  </dd>
-                </div>
-              ))}
+            <dl className="mt-10 grid gap-4 sm:grid-cols-2">
+              {dados.ficha.map(({ rotulo, valor, icone }) => {
+                const Icone = ICONES_FICHA[icone];
+                return (
+                  <div key={rotulo} className="rounded-lg border border-subtle bg-bg-surface p-6">
+                    <div className="flex items-center justify-between gap-4">
+                      <dt className="font-mono text-2xs uppercase tracking-[0.2em] text-fg-subtle">
+                        {rotulo}
+                      </dt>
+                      {Icone && <Icone size={18} strokeWidth={1.5} className="shrink-0 text-gold" />}
+                    </div>
+                    <dd className="mt-4 font-display text-lg font-bold leading-snug text-fg-primary md:text-xl">
+                      {valor}
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
+
+            <div className="mt-6 flex gap-4 rounded-lg border-l-2 border-gold bg-gold/10 p-6">
+              <p className="text-sm leading-relaxed text-fg-secondary">{dados.resultado}</p>
+            </div>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="font-mono text-2xs uppercase tracking-[0.2em] text-gold lg:mt-16">
+            <p className="font-mono text-2xs uppercase tracking-[0.2em] text-gold">
               {dados.entregasRotulo}
             </p>
             <ul className="mt-5 border-t border-subtle">
               {dados.entregas.map((item) => (
-                <li key={item} className="flex items-start gap-3.5 border-b border-subtle py-4">
+                <li key={item} className="flex items-start gap-3.5 border-b border-subtle py-5">
                   <CircleCheck size={17} strokeWidth={1.5} className="mt-0.5 shrink-0 text-gold" />
                   <span className="text-sm leading-snug text-fg-secondary md:text-base">{item}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-8 max-w-[52ch] border-l border-gold/60 pl-6 text-sm leading-relaxed text-fg-muted">
-              {dados.resultado}
-            </p>
           </Reveal>
         </div>
       </div>
@@ -181,16 +197,18 @@ function Depoimentos({ dados }) {
   return (
     <section id="depoimentos" data-tone="dark" className="section relative overflow-hidden">
       <div className="container-ds">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:items-stretch lg:gap-16">
           {/* A foto é o foco: ocupa a coluna maior, na proporção natural do
               arquivo, e o texto acompanha ao lado. */}
-          <Reveal>
+          {/* No desktop a foto estica até o fim da coluna de texto, para não
+              sobrar um vazio embaixo dela. No mobile segue a proporção 4:3. */}
+          <Reveal className="h-full">
             <img
               src={dados.foto}
               alt=""
               loading="lazy"
               decoding="async"
-              className="aspect-[4/3] w-full rounded-lg border border-subtle object-cover"
+              className="aspect-[4/3] h-full w-full rounded-lg border border-subtle object-cover lg:aspect-auto lg:min-h-[420px]"
             />
           </Reveal>
 

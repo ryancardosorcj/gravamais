@@ -93,7 +93,7 @@ export default function HeroProposta({ cliente }) {
 
         <motion.div className="mt-9 flex justify-center" {...entra(0.32)}>
           <a
-            href={HERO_PROPOSTA.ctaHref}
+            href={cliente.ctaHref ?? HERO_PROPOSTA.ctaHref}
             className="btn btn-primary btn-lg w-full sm:w-auto"
           >
             {HERO_PROPOSTA.cta}
