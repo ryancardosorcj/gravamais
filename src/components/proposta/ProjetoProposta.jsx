@@ -47,7 +47,8 @@ export default function ProjetoProposta({ projeto }) {
       {conteudos && <Conteudos dados={conteudos} />}
       {depoimentos && <Depoimentos dados={depoimentos} />}
       {roteiro && <Roteiro dados={roteiro} />}
-      {entrevista && <Entrevista dados={entrevista} />}
+      {/* Sem investimento, a última seção escura é a que fecha o bloco. */}
+      {entrevista && <Entrevista dados={entrevista} caixa={investimento ? '' : 'caixa-pe'} />}
       {investimento && <Investimento dados={investimento} />}
     </>
   );
@@ -368,12 +369,12 @@ function Campo({ rotulo, aspas = false, children }) {
 }
 
 /* 5 · Guia de entrevista + recomendação ------------------------ */
-function Entrevista({ dados }) {
+function Entrevista({ dados, caixa = '' }) {
   return (
     <section
       id="entrevista"
       data-tone="dark"
-      className="section relative overflow-hidden"
+      className={`section relative overflow-hidden ${caixa}`}
     >
       <div className="container-ds">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
@@ -460,18 +461,21 @@ function Investimento({ dados }) {
             </ul>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div className="rounded-lg border border-subtle bg-bg-surface p-8 md:p-12">
-              <p className="font-mono text-2xs uppercase tracking-[0.24em] text-gold">
-                {dados.legenda}
-              </p>
-              <span aria-hidden className="mt-4 block h-px w-10 bg-gold/70" />
-              <p className="mt-8 font-display text-5xl font-extrabold leading-none tracking-tight text-fg-primary md:text-7xl">
-                {brl(dados.valor)}
-              </p>
-              <p className="mt-4 text-sm text-fg-muted">Valor único, pelo projeto completo.</p>
-            </div>
-          </Reveal>
+          {/* Sem `valor` no dado, o cartão de preço não renderiza. */}
+          {dados.valor != null && (
+            <Reveal delay={0.1}>
+              <div className="rounded-lg border border-subtle bg-bg-surface p-8 md:p-12">
+                <p className="font-mono text-2xs uppercase tracking-[0.24em] text-gold">
+                  {dados.legenda}
+                </p>
+                <span aria-hidden className="mt-4 block h-px w-10 bg-gold/70" />
+                <p className="mt-8 font-display text-5xl font-extrabold leading-none tracking-tight text-fg-primary md:text-7xl">
+                  {brl(dados.valor)}
+                </p>
+                <p className="mt-4 text-sm text-fg-muted">Valor único, pelo projeto completo.</p>
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>

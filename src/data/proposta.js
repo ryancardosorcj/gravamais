@@ -379,17 +379,6 @@ export const CLIENTES_PROPOSTA = {
         mensagemCentral:
           'Mais do que relembrar o que aconteceu em 2026, queremos reconhecer quem fez tudo acontecer e inspirar todos a continuarem construindo essa história em 2027.',
       },
-      investimento: {
-        eyebrow: 'Investimento',
-        titulo: ['Um valor', 'para o projeto todo.'],
-        destaque: 1,
-        valor: 1300,
-        legenda: 'Retrospectiva 2026 PP Alumínio',
-        condicoes: [
-          'O banco de imagens necessário será captado na próxima captação mensal, sem uma diária extra.',
-          'A PPA disponibiliza o drive com os registros de 2026 e as fotos dos colaboradores para o mosaico.',
-        ],
-      },
     },
     /* Segundo orçamento da PPA, na mesma página, logo abaixo do primeiro.
        Fundo claro: rótulos em --brand-ink (ocre), porque o dourado fixo não lê
@@ -441,16 +430,10 @@ export const CLIENTES_PROPOSTA = {
           { src: '/proposta/ppaluminio/aura-chroma/obra-interior.jpg', alt: 'Sala com teto de madeira e esquadrias de correr' },
         ],
       },
-      investimento: {
-        eyebrow: 'Investimento',
-        titulo: ['Um valor para a edição.'],
-        valor: 400,
-        legenda: 'Vídeo institucional e comercial — Aura System e Chroma',
-      },
     },
     /* Terceiro orçamento: cobertura da confraternização, em fundo PRETO.
-       Duas opções de preço, conforme o briefing. A de maior cobertura fica em
-       caixa amarela. Título de seção é rascunho a revisar. */
+       Uma cobertura só, conforme o fechado com o cliente; sem preço na proposta.
+       Título de seção é rascunho a revisar. */
     projeto3: {
       escopo: {
         titulo: ['Orçamento 03 - Cobertura da Confraternização', '18 de dezembro · meia diária'],
@@ -466,30 +449,16 @@ export const CLIENTES_PROPOSTA = {
         src: '/proposta/ppaluminio/confraternizacao/brinde.jpg',
         alt: 'Colaboradores brindando durante a confraternização',
       },
+      /* Uma cobertura só, sem título de seção nem rótulo de opção. */
       opcoes: {
-        eyebrow: 'Investimento',
-        titulo: ['Duas opções', 'de cobertura.'],
         itens: [
           {
             id: 'a',
-            nome: 'Opção A',
-            valor: 1700,
             destaque: true,
             captacao: 'Câmera profissional, drone e celular',
             entregas: [
               '1 vídeo Aftermovie com os principais momentos da confraternização',
               'Cobertura de Stories em tempo real, com registros e publicações durante o evento',
-              'Fotografias dos principais momentos, equipe e convidados',
-            ],
-          },
-          {
-            id: 'b',
-            nome: 'Opção B',
-            valor: 1400,
-            destaque: false,
-            captacao: 'Câmera profissional e drone',
-            entregas: [
-              '1 vídeo Aftermovie com os principais momentos da confraternização',
               'Fotografias dos principais momentos, equipe e convidados',
             ],
           },

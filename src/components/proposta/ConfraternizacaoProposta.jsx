@@ -8,9 +8,10 @@ import { Reveal } from '../ui';
    `caixa-topo`, o último (a foto final) leva `caixa-pe`, e o Fecho vem logo
    depois, em claro.
 
-   Duas opções de preço lado a lado. A de maior cobertura (`destaque`) é a
-   caixa amarela; a outra segue a superfície escura. O dourado é o acento de
-   trilha e o limão fica só na caixa de destaque. */
+   Cobertura em cartões (`opcoes.itens`). Um cartão só fica em largura total;
+   dois ficam lado a lado. O de `destaque` é a caixa amarela; o outro segue a
+   superfície escura. O dourado é o acento de trilha e o limão fica só na caixa
+   de destaque. Sem `titulo` no `opcoes`, o cabeçalho da seção não renderiza. */
 
 const brl = (v) =>
   v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
@@ -112,12 +113,16 @@ function Opcoes({ dados }) {
   return (
     <section id="opcoes-3" data-tone="dark" className={SECAO}>
       <div className="container-ds">
-        <Reveal>
-          <Eyebrow>{dados.eyebrow}</Eyebrow>
-          <Titulo linhas={dados.titulo} />
-        </Reveal>
+        {dados.titulo && (
+          <Reveal>
+            <Eyebrow>{dados.eyebrow}</Eyebrow>
+            <Titulo linhas={dados.titulo} />
+          </Reveal>
+        )}
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 md:mt-14">
+        <div
+          className={`grid gap-6 ${dados.itens.length > 1 ? 'md:grid-cols-2' : ''} ${dados.titulo ? 'mt-12 md:mt-14' : ''}`}
+        >
           {dados.itens.map((op, i) => (
             <Reveal key={op.id} delay={0.08 * i} className="h-full">
               <Cartao opcao={op} />
@@ -139,10 +144,14 @@ function Cartao({ opcao }) {
 
   return (
     <article className={`flex h-full flex-col rounded-lg p-8 md:p-10 ${superficie}`}>
-      <p className={`font-mono text-2xs uppercase tracking-[0.24em] ${rotulo}`}>{opcao.nome}</p>
-      <p className="mt-5 font-display text-5xl font-extrabold leading-none tracking-tight md:text-6xl">
-        {brl(opcao.valor)}
-      </p>
+      {opcao.nome && (
+        <p className={`font-mono text-2xs uppercase tracking-[0.24em] ${rotulo}`}>{opcao.nome}</p>
+      )}
+      {opcao.valor != null && (
+        <p className="mt-5 font-display text-5xl font-extrabold leading-none tracking-tight md:text-6xl">
+          {brl(opcao.valor)}
+        </p>
+      )}
 
       <p className={`mt-10 font-mono text-2xs uppercase tracking-[0.2em] ${rotulo}`}>Captação</p>
       <p className="mt-2.5 font-display text-lg font-bold leading-snug">{opcao.captacao}</p>

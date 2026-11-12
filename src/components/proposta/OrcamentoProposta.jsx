@@ -49,8 +49,9 @@ export default function OrcamentoProposta({ dados, fechaBloco = false }) {
       <Escopo dados={escopo} />
       <Conteudos dados={conteudos} />
       <Banner dados={banner} />
-      <Direcao dados={direcao} />
-      <Investimento dados={investimento} fechaBloco={fechaBloco} />
+      {/* Sem investimento, a direção é a última seção clara e fecha o bloco. */}
+      <Direcao dados={direcao} caixa={investimento || !fechaBloco ? '' : 'caixa-pe'} />
+      {investimento && <Investimento dados={investimento} fechaBloco={fechaBloco} />}
     </>
   );
 }
@@ -143,9 +144,9 @@ function Banner({ dados }) {
 }
 
 /* 3 · Direção criativa -------------------------------------------- */
-function Direcao({ dados }) {
+function Direcao({ dados, caixa = '' }) {
   return (
-    <section id="direcao" data-tone="light" className={SECAO}>
+    <section id="direcao" data-tone="light" className={`${SECAO} ${caixa}`}>
       <div className="container-ds">
         <Reveal>
           <Eyebrow>{dados.eyebrow}</Eyebrow>
@@ -206,18 +207,21 @@ function Investimento({ dados, fechaBloco }) {
             <Titulo linhas={dados.titulo} />
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div className="rounded-lg bg-brand p-8 md:p-12">
-              <p className="font-mono text-2xs uppercase tracking-[0.24em] text-on-brand/70">
-                {dados.legenda}
-              </p>
-              <span aria-hidden className="mt-4 block h-px w-10 bg-on-brand/60" />
-              <p className="mt-8 font-display text-5xl font-extrabold leading-none tracking-tight text-on-brand md:text-7xl">
-                {brl(dados.valor)}
-              </p>
-              <p className="mt-4 text-sm text-on-brand/80">Valor único, pela edição do vídeo.</p>
-            </div>
-          </Reveal>
+          {/* Sem `valor` no dado, o cartão de preço não renderiza. */}
+          {dados.valor != null && (
+            <Reveal delay={0.1}>
+              <div className="rounded-lg bg-brand p-8 md:p-12">
+                <p className="font-mono text-2xs uppercase tracking-[0.24em] text-on-brand/70">
+                  {dados.legenda}
+                </p>
+                <span aria-hidden className="mt-4 block h-px w-10 bg-on-brand/60" />
+                <p className="mt-8 font-display text-5xl font-extrabold leading-none tracking-tight text-on-brand md:text-7xl">
+                  {brl(dados.valor)}
+                </p>
+                <p className="mt-4 text-sm text-on-brand/80">Valor único, pela edição do vídeo.</p>
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
