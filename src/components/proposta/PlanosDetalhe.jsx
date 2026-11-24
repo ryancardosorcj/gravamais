@@ -13,7 +13,9 @@ import { Reveal } from '../ui';
    O acento é o dourado inteiro aqui — nome do plano, régua, seta e a régua da
    nota. O limão não entra nesta seção: ele já carrega o selo e os CTAs do
    bloco de preço logo abaixo. */
-export default function PlanosDetalhe() {
+/* `cabecalho` e `planos` por prop: uma proposta com planos próprios (ver
+   `parolini`) troca os três cartões sem mexer nos das outras. */
+export default function PlanosDetalhe({ cabecalho = PLANOS_CABECALHO, planos = PLANOS_DETALHE }) {
   return (
     <section id="planos" data-tone="dark" className="section relative overflow-hidden">
       <div className="container-ds">
@@ -21,11 +23,11 @@ export default function PlanosDetalhe() {
           <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-20">
             <div>
               <p className="font-mono text-2xs uppercase tracking-[0.24em] text-gold">
-                {PLANOS_CABECALHO.eyebrow}
+                {cabecalho.eyebrow}
               </p>
 
               <h2 className="mt-6 font-display text-3xl font-bold leading-[1.18] tracking-tight text-fg-primary md:text-4xl">
-                {PLANOS_CABECALHO.titulo.map((linha) => (
+                {cabecalho.titulo.map((linha) => (
                   <span key={linha} className="block">
                     {linha}
                   </span>
@@ -33,23 +35,23 @@ export default function PlanosDetalhe() {
               </h2>
 
               <p className="mt-7 max-w-[54ch] text-sm leading-relaxed text-fg-muted md:text-base">
-                {PLANOS_CABECALHO.lead}
+                {cabecalho.lead}
               </p>
             </div>
 
             <p className="max-w-[34ch] border-l border-gold/60 pl-6 text-sm leading-relaxed text-fg-muted lg:mt-16">
-              {PLANOS_CABECALHO.nota}
+              {cabecalho.nota}
             </p>
           </div>
         </Reveal>
 
         <div className="mt-16 grid gap-8 md:mt-20 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:gap-6">
-          {PLANOS_DETALHE.map((plano, i) => (
+          {planos.map((plano, i) => (
             <Fragment key={plano.id}>
               <Reveal delay={0.08 * i} className="h-full">
                 <Cartao plano={plano} />
               </Reveal>
-              {i < PLANOS_DETALHE.length - 1 && (
+              {i < planos.length - 1 && (
                 <div
                   aria-hidden
                   className="hidden items-center justify-center text-gold lg:flex"

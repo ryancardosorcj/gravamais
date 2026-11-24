@@ -34,10 +34,29 @@ function comOverride(padrao, override) {
    mídia. Usado quando o cliente negociou um pacote fixo (ver `aquila` em
    data/proposta.js). Sem `fixos`, o comportamento de sempre continua 100%
    intacto — nenhum cliente existente muda. */
-export default function PlanosSelector({ precos, promos, inicial, fixos }) {
+/* `planos` e `nota` são o segundo escape hatch, para propostas com planos
+   PRÓPRIOS (ver `parolini`): mesmo card, mesmo dropdown de quantidade, mesma
+   lógica de preço e promoção — só muda QUAIS planos existem e o que cada um
+   lista. Cada plano traz { id, nome, descricao, quantidades, itens,
+   naoInclusos, recomendado }; em `itens`, 'diaria' e 'fotos' são as linhas
+   que acompanham a quantidade, na posição em que aparecem. Sem `planos`, os
+   três planos padrão seguem 100% intactos. Exceção ao congelamento
+   autorizada pelo Ryan em 2026-11-24, para os pacotes da Parolini. */
+const NOTA_PADRAO =
+  'O ESSENCIAL é onde a maioria das marcas acelera. ESCALA para começar; PRO para escalar. O escopo final é validado antes do início.';
+
+export default function PlanosSelector({ precos, promos, inicial, fixos, planos, nota }) {
   if (fixos) return <PlanosFixos planos={fixos} />;
 
-  return <PlanosPadrao precos={precos} promos={promos} inicial={inicial} />;
+  return (
+    <PlanosPadrao
+      precos={precos}
+      promos={promos}
+      inicial={inicial}
+      planos={planos}
+      nota={nota}
+    />
+  );
 }
 
 function PlanosFixos({ planos }) {
@@ -130,7 +149,7 @@ function PlanosFixos({ planos }) {
   );
 }
 
-function PlanosPadrao({ precos, promos, inicial }) {
+function PlanosPadrao({ precos, promos, inicial, planos, nota = NOTA_PADRAO }) {
   const PRECO_TAB = comOverride(PRECOS, precos);
   const PROMO_TAB = comOverride(PROMOS, promos);
 
@@ -149,15 +168,17 @@ function PlanosPadrao({ precos, promos, inicial }) {
   };
 
   const getPreco = (plano) => {
-    const preco = PRECO_TAB[plano][qtd[plano]];
-    const promo = PROMO_TAB[plano][qtd[plano]];
+    // `?.`: um plano próprio pode não ter tabela de promoção (o PONTUAL da
+    // Parolini não tem nenhuma). Os planos padrão sempre têm as duas.
+    const preco = PRECO_TAB[plano]?.[qtd[plano]];
+    const promo = PROMO_TAB[plano]?.[qtd[plano]];
     return { preco, promo };
   };
 
   const getDiaria = (plano) => qtd[plano] >= 8 ? '1 diária' : '½ diária';
   const getPhotos = (plano) => `${qtd[plano]} fotografia${qtd[plano] !== 1 ? 's' : ''}`;
 
-  const plans = [
+  const plansPadrao = [
     {
       id: 'escala',
       name: 'ESCALA',
@@ -187,6 +208,19 @@ function PlanosPadrao({ precos, promos, inicial }) {
       recommended: false,
     },
   ];
+
+  const plans = planos
+    ? planos.map((p) => ({
+        id: p.id,
+        name: p.nome,
+        description: p.descricao,
+        videoOptions: p.quantidades,
+        itens: p.itens,
+        features: [],
+        disabledFeatures: p.naoInclusos ?? [],
+        recommended: !!p.recomendado,
+      }))
+    : plansPadrao;
 
   const DropdownMenu = ({ plano, options, onSelect }) => (
     <div className="absolute top-full left-0 bg-zinc-900 border border-brand rounded mt-1 z-10 min-w-40 shadow-lg">
@@ -274,17 +308,36 @@ function PlanosPadrao({ precos, promos, inicial }) {
                       </div>
                     </div>
 
-                    {/* Diária */}
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="text-brand text-lg">•</span>
-                      <span className="text-gray-300">{getDiaria(plan.id)}</span>
-                    </div>
+                    {/* Plano próprio: a lista vem na ordem do dado, com
+                        diária e fotos na posição em que o cliente as pôs. */}
+                    {plan.itens?.map((item) => (
+                      <div key={item} className="mb-3 flex items-start gap-3">
+                        <span className="text-brand text-lg mt-0">•</span>
+                        <span className="text-gray-300">
+                          {item === 'diaria'
+                            ? `${getDiaria(plan.id)} de captação`
+                            : item === 'fotos'
+                              ? getPhotos(plan.id)
+                              : item}
+                        </span>
+                      </div>
+                    ))}
 
-                    {/* Fotografias */}
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="text-brand text-lg">•</span>
-                      <span className="text-gray-300">{getPhotos(plan.id)}</span>
-                    </div>
+                    {!plan.itens && (
+                      <>
+                        {/* Diária */}
+                        <div className="mb-4 flex items-center gap-3">
+                          <span className="text-brand text-lg">•</span>
+                          <span className="text-gray-300">{getDiaria(plan.id)}</span>
+                        </div>
+
+                        {/* Fotografias */}
+                        <div className="mb-4 flex items-center gap-3">
+                          <span className="text-brand text-lg">•</span>
+                          <span className="text-gray-300">{getPhotos(plan.id)}</span>
+                        </div>
+                      </>
+                    )}
 
                     {/* Enabled Features */}
                     {plan.features.map((feature, idx) => (
@@ -339,7 +392,9 @@ function PlanosPadrao({ precos, promos, inicial }) {
 
                   {/* Preço */}
                   <div className="border-t border-zinc-700 pt-6 text-center">
-                    {isPromo && (
+                    {/* Promo sem preço "de" na tabela (planos próprios) não
+                        tem o que riscar: fica só o destaque do valor. */}
+                    {isPromo && preco != null && preco !== promo && (
                       <div className="text-sm text-gray-500 line-through mb-2">
                         R${preco.toLocaleString('pt-BR')}
                       </div>
@@ -364,8 +419,7 @@ function PlanosPadrao({ precos, promos, inicial }) {
         {/* A ressalva fecha a seção em vez de abrir: no meio, logo abaixo do
             título, ela competia com os cards pela atenção. */}
         <p className="mt-14 max-w-[64ch] border-t border-zinc-800 pt-6 text-xs leading-relaxed text-gray-500">
-          O ESSENCIAL é onde a maioria das marcas acelera. ESCALA para começar;
-          PRO para escalar. O escopo final é validado antes do início.
+          {nota}
         </p>
       </div>
     </div>

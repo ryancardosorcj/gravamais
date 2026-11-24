@@ -83,10 +83,18 @@ export default function PropostaPage() {
 
           {/* Mesma trilha da LP, outra moldura: título próprio, sem a ressalva e
               sem `caixa-topo`, porque aqui ela não abre o bloco escuro. */}
+          {/* `cliente.metodo` troca a moldura E os nós (ex.: a Parolini, que
+              contrata só produção). Centro e nós ausentes caem nos da LP. */}
           <MapaMental
-            titulo={METODO_PROPOSTA.titulo}
-            destaque={METODO_PROPOSTA.destaque}
-            lead={METODO_PROPOSTA.lead}
+            titulo={cliente.metodo?.titulo ?? METODO_PROPOSTA.titulo}
+            destaque={
+              cliente.metodo ? cliente.metodo.destaque : METODO_PROPOSTA.destaque
+            }
+            lead={cliente.metodo?.lead ?? METODO_PROPOSTA.lead}
+            centro={cliente.metodo?.centro}
+            centroSub={cliente.metodo?.centroSub}
+            nos={cliente.metodo?.nos}
+            imagens={cliente.metodo?.imagens}
             ressalva={null}
             caixa=""
           />
@@ -119,16 +127,21 @@ export default function PropostaPage() {
             </section>
           )}
 
-          <PlanosDetalhe />
+          <PlanosDetalhe
+            cabecalho={cliente.planosDetalhe?.cabecalho}
+            planos={cliente.planosDetalhe?.planos}
+          />
           <PlanosSelector
             precos={cliente.planos?.precos}
             promos={cliente.planos?.promos}
             inicial={cliente.planos?.inicial}
             fixos={cliente.planos?.fixos}
+            planos={cliente.planos?.definicoes}
+            nota={cliente.planos?.nota}
           />
 
           {/* --- Bloco claro que fecha a página --- */}
-          <FAQProposta />
+          <FAQProposta dados={cliente.faq} />
           <FechoProposta />
           </>
         )}

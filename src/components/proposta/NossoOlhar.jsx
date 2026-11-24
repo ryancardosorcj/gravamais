@@ -53,10 +53,15 @@ export default function NossoOlhar({ cliente }) {
 
   const direcoes = olhar.direcoes ?? [];
   const imagens = olhar.imagens ?? [];
+  /* Estilo "vidro" (opt-in por cliente): cartões translúcidos de moldura
+     dourada sobre uma foto que dissolve pela direita. Sem `estilo`, a seção
+     segue no desenho editorial de colunas. */
+  const vidro = olhar.estilo === 'vidro';
 
   return (
     <section id="olhar" data-tone="dark" className="section relative overflow-hidden">
-      {imagens.length > 0 && <Faixas imagens={imagens} />}
+      {vidro && olhar.fundo && <Fundo src={olhar.fundo} />}
+      {!vidro && imagens.length > 0 && <Faixas imagens={imagens} />}
 
       <div className="container-ds relative">
         <Reveal>
@@ -89,6 +94,31 @@ export default function NossoOlhar({ cliente }) {
             por `border-l`: as células ficam transparentes para as faixas
             aparecerem atrás, e com 4 colunas fixas o filete é só "todas menos a
             primeira" — sem regra de nth-child por breakpoint. */}
+        {vidro ? (
+          <ol className="mt-14 grid gap-5 md:mt-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {blocos.map(({ chave, rotulo }, i) => (
+              <li key={chave}>
+                <Reveal delay={0.06 * i} className="h-full">
+                  <div className="card-vidro h-full">
+                    <div className="card-vidro-miolo h-full px-6 py-7 md:px-7 md:py-8">
+                      <span className="font-display text-3xl font-semibold leading-none text-gold">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <p className="mt-5 font-mono text-2xs uppercase tracking-[0.24em] text-fg-secondary">
+                        {rotulo}
+                      </p>
+                      {typeof olhar[chave] === 'string' ? (
+                        <BlocoTexto texto={olhar[chave]} />
+                      ) : (
+                        <BlocoRico bloco={olhar[chave]} />
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        ) : (
         <ol className="mt-14 grid gap-px bg-[var(--border-subtle)] md:mt-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:bg-transparent">
           {blocos.map(({ chave, rotulo }, i) => (
             <li
@@ -116,6 +146,7 @@ export default function NossoOlhar({ cliente }) {
             </li>
           ))}
         </ol>
+        )}
 
         {direcoes.length > 0 && (
           <Reveal delay={0.1}>
@@ -226,6 +257,35 @@ function BlocoRico({ bloco }) {
         </p>
       )}
     </>
+  );
+}
+
+/* Fundo do estilo "vidro": uma foto só, ancorada à direita e dissolvendo
+   para a esquerda, como na referência. É ela que dá o que o vidro dos
+   cartões desfocar. No mobile ela cobre a largura toda, mais apagada, porque
+   o texto passa por cima. Véu em cima e embaixo para a seção encostar no
+   preto das vizinhas sem aresta. */
+function Fundo({ src }) {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0">
+      <div
+        className="absolute inset-y-0 right-0 w-full opacity-25 lg:-right-[6%] lg:w-[46%] lg:opacity-45"
+        style={{
+          backgroundImage: `url(${src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 14%',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 48%)',
+          maskImage: 'linear-gradient(90deg, transparent, #000 48%)',
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(180deg, var(--bg-deep) 0%, rgb(0 0 0 / 0.2) 26%, rgb(0 0 0 / 0.3) 72%, var(--bg-deep) 100%)',
+        }}
+      />
+    </div>
   );
 }
 

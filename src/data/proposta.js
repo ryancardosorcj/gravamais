@@ -897,23 +897,213 @@ export const CLIENTES_PROPOSTA = {
         { texto: 'Prova', icone: 'escudo' },
         { texto: 'Quebra de objeções', icone: 'balao' },
       ],
-      /* Sem fotos da clínica ainda: os stills da base seguram o lugar.
-         Substituir por imagens do espaço/atendimento quando chegarem. */
+      /* Estilo "vidro": os quatro blocos viram cartões translúcidos com
+         moldura dourada, sobre uma foto que dissolve pela direita. Sem
+         `estilo`, a seção segue no desenho editorial de colunas da base.
+         `fundo` substitui as `imagens` (faixas) nesse estilo. */
+      estilo: 'vidro',
+      fundo: '/proposta/parolini/retrato.jpg',
+    },
+    /* Recorte voltado a serviço de beleza e marca de acabamento premium.
+       Os quatro vídeos da Marina Baglini (conteúdo de autoridade com a
+       especialista falando para a câmera) não estão no portfólio da LP —
+       por isso entram como objeto aqui, e não pelo título via site.js. */
+    portfolio: [
+      ...montarPortfolio(['Apotica']),
+      { id: '1afe527c-1b23-43ec-b0b1-d0b1d4026443', titulo: 'Por que desenhar um tapete', categoria: 'Redes sociais', thumbnail: 'url(/portfolio_thubs/marina-tapete.jpg)' },
+      { id: '0f942e5e-68fd-4581-94ff-b8d68976643f', titulo: 'Coisas que eu acho chic', categoria: 'Redes sociais', thumbnail: 'url(/portfolio_thubs/marina-chic.jpg)' },
+      { id: '65cfbda4-ee69-46ca-951b-c128dcb5820d', titulo: 'Quase ninguém percebe isso', categoria: 'Redes sociais', thumbnail: 'url(/portfolio_thubs/marina-quase-ninguem.jpg)' },
+      ...montarPortfolio(['Criativo Barbearia']),
+      { id: '38397988-b458-468d-a4cf-2ba9d226439b', titulo: 'Essa cristaleira', categoria: 'Redes sociais', thumbnail: 'url(/portfolio_thubs/marina-cristaleira.jpg)' },
+    ],
+    /* "Como projetamos" vira "Como transformamos captação em conteúdo": a
+       mesma trilha do MapaMental, com os nós deste cliente. A cliente contrata
+       só produção de vídeo — nada de diagnóstico, estratégia ou tráfego.
+       `imagens`: as três fotos lado a lado, entre o texto e o "Sua Marca". */
+    metodo: {
+      titulo: ['Como transformamos captação em conteúdo'],
+      destaque: null,
+      lead: 'Planejamos e produzimos conteúdos que fortalecem a presença da sua clínica ao longo do tempo. Em apenas 1 a 3 diárias de captação, criamos um banco de vídeos e fotografias de alta qualidade, preparado para alimentar sua comunicação durante o mês ou trimestre, com roteiros, capas, legendas e postagens agendadas.',
+      centro: 'Sua Marca',
+      centroSub: 'O ponto de partida',
       imagens: [
-        '/proposta/base/faixa-1.jpg',
-        '/proposta/base/faixa-2.jpg',
-        '/proposta/base/faixa-3.jpg',
+        { src: '/proposta/parolini/mapa-profissional.jpg', alt: 'Especialista de jaleco caminhando pelo corredor da clínica' },
+        { src: '/proposta/parolini/mapa-atendimento.jpg', alt: 'Especialista avaliando o rosto de uma paciente durante o atendimento' },
+        { src: '/proposta/parolini/mapa-paciente.jpg', alt: 'Paciente sorrindo na cadeira do consultório' },
+      ],
+      nos: [
+        {
+          titulo: 'Planejamento',
+          texto: 'Entendemos os objetivos da clínica e definimos os conteúdos que precisam ser produzidos para fortalecer sua comunicação.',
+          icone: 'bussola',
+        },
+        {
+          titulo: 'Roteirização',
+          texto: 'Transformamos os objetivos em ideias, mensagens e roteiros que valorizam a profissional, os serviços e os diferenciais da clínica.',
+          icone: 'caneta',
+        },
+        {
+          titulo: 'Captação',
+          texto: 'Concentramos a produção em diárias planejadas, registrando vídeos, fotografias, ambientes, atendimentos e detalhes que constroem a percepção da marca.',
+          icone: 'camera',
+        },
+        {
+          titulo: 'Edição',
+          texto: 'Transformamos o material captado em conteúdos audiovisuais de alta qualidade, prontos para serem publicados.',
+          icone: 'filme',
+        },
+        {
+          titulo: 'Capas e Legendas',
+          texto: 'Cada conteúdo recebe uma apresentação visual e uma legenda pensadas para comunicar melhor e manter a identidade da clínica.',
+          icone: 'capa',
+        },
+        {
+          titulo: 'Agendamento',
+          texto: 'Organizamos e agendamos as publicações para manter a comunicação ativa e consistente ao longo do período contratado.',
+          icone: 'agenda',
+        },
+        {
+          titulo: 'Banco de Conteúdo',
+          texto: 'Ao final de cada ciclo, a clínica conta com um acervo de vídeos e fotografias profissionais, fortalecendo sua presença digital e construindo uma base de conteúdo que valoriza sua marca.',
+          icone: 'acervo',
+        },
       ],
     },
-    /* Recorte voltado a serviço de beleza e marca de acabamento premium. */
-    portfolio: montarPortfolio([
-      'Apotica',
-      'Villa Maré Hotel',
-      'Reinauguração Apotica',
-      'Mini Serie Barbearia',
-      'Criativo Barbearia',
-      'R3 Fitness Academia',
-    ]),
+    /* Só produção de vídeo: PONTUAL → TRIMESTRAL → SEMESTRAL substituem
+       ESCALA → ESSENCIAL → PRO, nos cartões e no seletor. */
+    planosDetalhe: {
+      cabecalho: {
+        eyebrow: 'Nossos planos',
+        titulo: ['Três formas de produzir', 'o conteúdo da sua clínica.'],
+        lead: 'Os três formatos são de produção audiovisual. O que muda entre eles é o período e o quanto de cada conteúdo já chega pronto para publicar.',
+        nota: 'Vídeos e fotografias captados com planejamento, para a clínica comunicar com a mesma qualidade do atendimento que oferece.',
+      },
+      planos: [
+        {
+          id: 'pontual',
+          nome: 'PONTUAL',
+          imagem: '/proposta/parolini/plano-pontual.jpg',
+          titulo: 'Produção para um momento específico',
+          texto: 'Para quando a clínica precisa de um conjunto de vídeos e fotografias, com roteiro, captados e editados para uma necessidade pontual.',
+          foco: 'Vídeos + Fotografias + Roteiros',
+        },
+        {
+          id: 'trimestral',
+          nome: 'TRIMESTRAL',
+          imagem: '/proposta/parolini/plano-trimestral.jpg',
+          titulo: 'Conteúdo pronto para publicar',
+          texto: 'Três meses de produção, com captação aérea e cada conteúdo entregue com capa, legenda e postagem agendada.',
+          foco: 'Vídeos + Fotografias + Drone + Capas e legendas + Agendamento',
+        },
+        {
+          id: 'semestral',
+          nome: 'SEMESTRAL',
+          imagem: '/proposta/parolini/plano-semestral.jpg',
+          titulo: 'Presença constante da marca',
+          texto: 'Seis meses de produção, somando artes estáticas, carrossel e um calendário editorial para a comunicação seguir com ritmo.',
+          foco: 'Vídeos + Fotografias + Drone + Capas e legendas + Agendamento + Artes e carrossel + Calendário editorial',
+        },
+      ],
+    },
+    /* Planos próprios no PlanosSelector (`definicoes`): mesmo desenho e mesma
+       lógica de quantidade. Todos começam em 10 vídeos. 4 ou 6 vídeos = meia
+       diária; 10 = diária completa (regra do seletor: ≥ 8 → 1 diária). Fotos
+       acompanham os vídeos. Em `itens`, 'diaria' e 'fotos' são as linhas que
+       se atualizam com a quantidade, na posição em que aparecem.
+
+       10 vídeos do TRIMESTRAL e do SEMESTRAL são valor promocional: entram em
+       `promos` para ganhar o destaque do seletor (verde + selo PROMO). Não
+       há preço "de" — por isso não há preço riscado. */
+    planos: {
+      definicoes: [
+        {
+          id: 'pontual',
+          nome: 'PONTUAL',
+          descricao: 'Vídeos + fotos com roteiro. Ideal para uma necessidade específica da clínica.',
+          quantidades: [4, 6, 10],
+          itens: ['diaria', 'fotos', 'Roteirização', 'Análise de resultados/métricas'],
+          naoInclusos: [
+            'Captação com drone',
+            'Criação de capa',
+            'Criação de legendas',
+            'Agendamento de postagens',
+            'Criação de artes estáticas/carrossel',
+            'Calendário editorial',
+          ],
+        },
+        {
+          id: 'trimestral',
+          nome: 'TRIMESTRAL',
+          descricao: 'Três meses de conteúdo pronto para publicar, com capa, legenda e agendamento.',
+          quantidades: [4, 6, 10],
+          itens: [
+            'diaria',
+            'Captação com drone',
+            'fotos',
+            'Roteirização',
+            'Criação de capa',
+            'Criação de legendas',
+            'Agendamento de postagens',
+            'Análise mensal de resultados/métricas',
+          ],
+          naoInclusos: ['Criação de artes estáticas/carrossel', 'Calendário editorial'],
+          recomendado: true,
+        },
+        {
+          id: 'semestral',
+          nome: 'SEMESTRAL',
+          descricao: 'Seis meses de presença, com artes, carrossel e calendário editorial.',
+          quantidades: [4, 6, 10],
+          itens: [
+            'diaria',
+            'Captação com drone',
+            'fotos',
+            'Roteirização',
+            'Criação de capa',
+            'Criação de legendas',
+            'Agendamento de postagens',
+            'Análise mensal de resultados/métricas',
+            'Criação de artes estáticas/carrossel',
+            'Calendário editorial',
+          ],
+        },
+      ],
+      precos: {
+        pontual: { 4: 1500, 6: 2000, 10: 3000 },
+        trimestral: { 4: 1700, 6: 2200 },
+        semestral: { 4: 2100, 6: 2600 },
+      },
+      promos: {
+        trimestral: { 10: 2500 },
+        semestral: { 10: 3000 },
+      },
+      inicial: { pontual: 10, trimestral: 10, semestral: 10 },
+      nota: 'Os três formatos começam em 10 vídeos. Ao escolher 6 ou 4, a diária, as fotografias e o valor se ajustam. O escopo final é validado antes do início.',
+    },
+    /* FAQ próprio: o padrão cita ESCALA/ESSENCIAL/PRO. A pergunta das
+       revisões saiu até a política dos planos novos ser definida. */
+    faq: {
+      titulo: ['Tudo alinhado', 'para começar bem.'],
+      destaque: 1,
+      perguntas: [
+        {
+          pergunta: 'Qual é o prazo de entrega?',
+          resposta: 'O cronograma é definido após a captação. Como referência, trabalhamos com até 7 dias úteis.',
+        },
+        {
+          pergunta: 'Como funciona o dia de captação?',
+          resposta: 'Chegamos com os roteiros aprovados e conduzimos a gravação, do setup de luz e áudio à direção de cada cena.',
+        },
+        {
+          pergunta: 'Quanto tempo de captação cada formato tem?',
+          resposta: 'Depende da quantidade de vídeos: 4 ou 6 vídeos são captados em meia diária, e 10 vídeos em uma diária completa.',
+        },
+        {
+          pergunta: 'Os vídeos chegam prontos para publicar?',
+          resposta: 'No PONTUAL, os arquivos são entregues nos formatos combinados, com edição, tratamento de cor e trilha. No TRIMESTRAL e no SEMESTRAL, cada conteúdo também recebe capa e legenda, e nós cuidamos do agendamento das postagens.',
+        },
+      ],
+    },
   },
 };
 

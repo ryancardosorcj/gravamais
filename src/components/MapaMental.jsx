@@ -8,6 +8,10 @@ import {
   Send,
   LayoutGrid,
   TrendingUp,
+  Camera,
+  Film,
+  CalendarClock,
+  FolderOpen,
 } from 'lucide-react';
 import { MAPA } from '../data/site';
 import { TitleBlock, Reveal } from './ui';
@@ -36,16 +40,38 @@ import { TitleBlock, Reveal } from './ui';
 
 const ICONES = [Search, Compass, PenLine, Clapperboard, Send, LayoutGrid, TrendingUp];
 
+/* Nós de proposta podem nomear o ícone (`icone`); sem nome, vale a posição
+   em ICONES — que é como a LP sempre funcionou. */
+const ICONES_POR_NOME = {
+  bussola: Compass,
+  caneta: PenLine,
+  camera: Camera,
+  filme: Film,
+  capa: LayoutGrid,
+  agenda: CalendarClock,
+  acervo: FolderOpen,
+  envio: Send,
+};
+
 /* Título, lead, ressalva e arredondamento entram por prop com o valor da LP
    como padrão: a página de proposta reusa a MESMA trilha com outra moldura
    (outro título, sem ressalva, sem canto arredondado por estar no meio de um
-   bloco escuro). Os nós — que são o conteúdo de fato — nunca mudam. */
+   bloco escuro).
+
+   Centro e nós também podem vir por prop, para a proposta de um cliente que
+   contrata outra coisa (ex.: só produção — ver `parolini`). Sem prop, são os
+   da LP. `imagens` ({ src, alt }) entram numa fileira entre o lead e a
+   origem da trilha; sem elas, nada muda. */
 export default function MapaMental({
   titulo = MAPA.titulo,
   destaque = MAPA.destaque,
   lead = MAPA.lead,
   ressalva = MAPA.ressalva,
   caixa = 'caixa-topo',
+  centro = MAPA.centro,
+  centroSub = MAPA.centroSub,
+  nos = MAPA.nos,
+  imagens = [],
 }) {
   const [segmentos, setSegmentos] = useState([]);
   const [fim, setFim] = useState(null);
@@ -88,7 +114,8 @@ export default function MapaMental({
       const my = (a.y + b.y) / 2;
       novos.push({
         d: `M ${a.x} ${a.y} C ${a.x} ${my}, ${b.x} ${my}, ${b.x} ${b.y}`,
-        tracejado: !MAPA.nos[i - 1].base, // o traço do nó em que CHEGA
+        // o traço do nó em que CHEGA; nó sem `base` declarado é sólido
+        tracejado: nos[i - 1].base === false,
       });
     }
     // A cauda e o ponto de luz que fecham a trilha. Montados ANTES do
@@ -107,7 +134,7 @@ export default function MapaMental({
     }
 
     setSegmentos(novos);
-  }, []);
+  }, [nos]);
 
   useLayoutEffect(() => {
     medir();
@@ -148,6 +175,29 @@ export default function MapaMental({
             <p className="lead mx-auto mt-7 !max-w-[78ch]">{lead}</p>
           </div>
         </Reveal>
+
+        {/* Fotos opcionais, lado a lado, entre o texto e a origem da trilha:
+            mostram o que a captação produz antes de a trilha explicar como.
+            Inteiras, na proporção do arquivo (9:16). */}
+        {imagens.length > 0 && (
+          <Reveal delay={0.05}>
+            <ul className="mx-auto mt-14 grid max-w-3xl grid-cols-3 gap-3 md:mt-16 md:gap-5">
+              {imagens.map((img) => (
+                <li key={img.src}>
+                  <img
+                    src={img.src}
+                    alt={img.alt ?? ''}
+                    width="768"
+                    height="1376"
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[768/1376] w-full rounded-lg border border-subtle object-cover shadow-[0_22px_48px_-24px_rgba(0,0,0,0.95)]"
+                  />
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        )}
 
         <div ref={palcoRef} className="relative mt-20 md:mt-24">
           {/* A trilha luminosa */}
@@ -210,10 +260,10 @@ export default function MapaMental({
                 <Building2 size={20} strokeWidth={1.9} className="text-gold" aria-hidden />
                 <div>
                   <p className="font-display text-lg font-bold leading-none text-fg-primary lg:text-xl">
-                    {MAPA.centro}
+                    {centro}
                   </p>
                   <p className="mt-1.5 font-mono text-2xs uppercase tracking-[0.2em] text-gold/70">
-                    {MAPA.centroSub}
+                    {centroSub}
                   </p>
                 </div>
               </div>
@@ -227,8 +277,8 @@ export default function MapaMental({
 
           {/* ---------- Nós ---------- */}
           <ol className="relative mt-10 flex flex-col gap-10 md:mt-12 md:gap-12">
-            {MAPA.nos.map((no, i) => {
-              const Icone = ICONES[i];
+            {nos.map((no, i) => {
+              const Icone = ICONES_POR_NOME[no.icone] ?? ICONES[i] ?? Compass;
               const direita = i % 2 === 0;
               return (
                 <li

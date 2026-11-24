@@ -10,7 +10,9 @@ import { TitleBlock, Reveal } from '../ui';
    a transição é CSS puro e não exige medir o conteúdo — height:auto não é
    animável, e fixar altura quebraria na primeira resposta que virasse linha.
    O filho precisa de overflow-hidden e min-h-0 para o truque funcionar. */
-export default function FAQProposta() {
+/* `dados` por prop: o FAQ padrão cita os planos ESCALA/ESSENCIAL/PRO, então
+   uma proposta com planos próprios traz o seu. */
+export default function FAQProposta({ dados = FAQ }) {
   const [aberta, setAberta] = useState(0);
 
   return (
@@ -21,15 +23,15 @@ export default function FAQProposta() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,24rem)_1fr] lg:gap-20">
           <Reveal>
             <TitleBlock
-              linhas={FAQ.titulo}
-              destaque={FAQ.destaque}
+              linhas={dados.titulo}
+              destaque={dados.destaque}
               className="font-display text-3xl font-extrabold leading-[1.1] tracking-tight md:text-4xl lg:text-5xl"
             />
           </Reveal>
 
           <Reveal delay={0.1}>
             <ul className="border-t border-base">
-              {FAQ.perguntas.map(({ pergunta, resposta }, i) => {
+              {dados.perguntas.map(({ pergunta, resposta }, i) => {
                 const ativa = aberta === i;
                 return (
                   <li key={pergunta} className="border-b border-base">
