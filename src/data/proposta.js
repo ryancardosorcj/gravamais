@@ -471,6 +471,157 @@ export const CLIENTES_PROPOSTA = {
       },
     },
   },
+  /* Projeto único: vídeo demonstrativo da trena de profundidade, captado na
+     Ruff Distribuidora (Paulínia/SP). Mesmo formato `projeto` da PPA, com
+     três seções a mais: `referencias`, `entregas` e `atencao`.
+
+     As imagens (public/proposta/starrett/) são REFERÊNCIA criada por IA —
+     enquadramento e clima, não o local real, e NÃO são roteiro nem storyboard.
+     O roteiro só é escrito depois da visita técnica. Por isso a seção não
+     numera, não ordena e não conta as imagens: qualquer número ali sugere uma
+     sequência de cenas que ainda não existe.
+
+     A captação em primeira pessoa com óculos inteligentes NÃO é garantida:
+     depende da segurança da unidade. Toda copy que cita POV mantém essa
+     ressalva. */
+  'Starrett-Trena': {
+    nome: 'Starrett',
+    logo: '/clientes/starrett.webp',
+    ctaHref: '#escopo',
+    projeto: {
+      escopo: {
+        eyebrow: 'O projeto',
+        titulo: ['Vídeo demonstrativo', 'Trena de profundidade Starrett'],
+        lead: 'Apresentar a funcionalidade e a aplicação da trena de profundidade Starrett na medição de tanques de combustível, usando a estrutura operacional da Ruff Distribuidora como cenário.',
+        ficha: [
+          { rotulo: 'Local', valor: 'Ruff Distribuidora · Paulínia/SP', icone: 'local' },
+          { rotulo: 'Formato', valor: 'Vertical 9:16', icone: 'formato' },
+          { rotulo: 'Captação', valor: '01 diária', icone: 'camera' },
+          { rotulo: 'Previsão', valor: 'Jan/fev de 2027', icone: 'calendario' },
+        ],
+        /* A coluna da direita é o conceito, não o escopo — as entregas ganham
+           seção própria. Sem números: a ordem das cenas sai do roteiro. */
+        entregasRotulo: 'O que o vídeo acompanha',
+        entregas: [
+          'O ambiente e os tanques da unidade',
+          'A chegada do caminhão',
+          'O profissional saindo do veículo, sem mostrar o rosto',
+          'Os pés na subida pelas escadas de acesso ao tanque',
+          'Imagens em primeira pessoa manuseando a trena',
+          'A demonstração da aplicação do produto',
+        ],
+        resultado:
+          'Um vídeo que mostra a trena Starrett onde ela faz diferença: na rotina real de quem mede tanques de combustível todos os dias.',
+      },
+      /* Quadro de referências. Cada imagem pertence a um `tema` — os temas
+         são os princípios de linguagem do vídeo, e clicar em um destaca as
+         imagens dele no quadro. A ORDEM da lista é só a da montagem do quadro
+         (mistura os temas de propósito, para não ler como sequência). */
+      referencias: {
+        eyebrow: 'Referências visuais',
+        titulo: ['Ainda não é o roteiro.', 'É o olhar que buscamos.'],
+        destaque: 1,
+        lead: 'Imagens de referência para alinhar enquadramentos, clima e o tipo de detalhe que queremos captar. O roteiro é criado depois da visita técnica, a partir do que encontrarmos na Ruff Distribuidora.',
+        aviso: 'Imagens ilustrativas criadas por IA. Toque em uma para ampliar.',
+        temas: [
+          { id: 'escala', titulo: 'Escala', texto: 'A dimensão da operação: tanques, passarelas e o pátio em movimento.' },
+          { id: 'presenca', titulo: 'Presença, sem rosto', texto: 'O profissional aparece pelos gestos: os pés, a subida, a caminhada.' },
+          { id: 'pov', titulo: 'Primeira pessoa', texto: 'O olhar de quem mede, se a segurança da unidade autorizar.' },
+          { id: 'produto', titulo: 'O produto em uso', texto: 'A trena Starrett no lugar onde ela trabalha.' },
+        ],
+        imagens: [
+          { src: '/proposta/starrett/unidade-aerea.jpg', tema: 'escala', alt: 'Vista aérea de uma distribuidora de combustíveis ao nascer do sol' },
+          { src: '/proposta/starrett/bota-cabine.jpg', tema: 'presenca', alt: 'Bota do profissional descendo da cabine do caminhão' },
+          { src: '/proposta/starrett/pov-trena.jpg', tema: 'pov', alt: 'Em primeira pessoa, a trena de profundidade entrando na abertura do tanque' },
+          { src: '/proposta/starrett/tanques-passarelas.jpg', tema: 'escala', alt: 'Passarela metálica sobre o topo dos tanques' },
+          { src: '/proposta/starrett/produto-detalhe.jpg', tema: 'produto', alt: 'Trena de profundidade Starrett com o prumo descendo pela boca do tanque' },
+          { src: '/proposta/starrett/patio-operacao.jpg', tema: 'escala', alt: 'Caminhões-tanque circulando entre tanques e tubulações no fim da tarde' },
+          { src: '/proposta/starrett/pov-tampa.jpg', tema: 'pov', alt: 'Em primeira pessoa, mãos com luvas abrindo a tampa do tanque' },
+          { src: '/proposta/starrett/escada-espiral.jpg', tema: 'escala', alt: 'Vista aérea do profissional na escada em espiral que contorna o tanque' },
+          { src: '/proposta/starrett/pes-escada.jpg', tema: 'presenca', alt: 'Botas subindo a escada metálica do tanque' },
+          { src: '/proposta/starrett/caminhao-manobra.jpg', tema: 'escala', alt: 'Caminhão-tanque manobrando no pátio' },
+          { src: '/proposta/starrett/subida-costas.jpg', tema: 'presenca', alt: 'Profissional de costas subindo a escada ao lado do tanque' },
+          { src: '/proposta/starrett/leitura-fita.jpg', tema: 'produto', alt: 'Fita graduada da trena sendo lida na borda do tanque' },
+          { src: '/proposta/starrett/caminhada-topo.jpg', tema: 'presenca', alt: 'Profissional de costas caminhando pela passarela no topo do tanque' },
+          { src: '/proposta/starrett/pov-carretel.jpg', tema: 'pov', alt: 'Em primeira pessoa, braços estendidos segurando o carretel da trena sobre o tanque' },
+        ],
+      },
+      entregas: {
+        eyebrow: 'Entregas',
+        titulo: ['Do reconhecimento', 'à entrega final.'],
+        destaque: 1,
+        /* A ordem do trabalho. O roteiro fica entre a visita e a captação:
+           é a visita que dá o material para escrevê-lo. */
+        etapas: [
+          { titulo: 'Visita técnica', quando: 'Ainda em 2026' },
+          { titulo: 'Roteiro', quando: 'Após a visita' },
+          { titulo: 'Captação', quando: 'Jan/fev de 2027' },
+          { titulo: 'Edição e entrega', quando: 'Após a captação' },
+        ],
+        producao: {
+          rotulo: 'Produção audiovisual',
+          itens: [
+            'Criação do roteiro, após a visita técnica',
+            '01 diária de captação em Paulínia/SP',
+            'Direção e acompanhamento da produção',
+            'Captação em formato vertical (9:16)',
+            'Edição e finalização de 01 vídeo',
+            'Entrega digital',
+            'Banco de imagens bruto da captação',
+          ],
+        },
+        visita: {
+          rotulo: 'Visita técnica prévia',
+          selo: 'Inclusa · sem custo adicional',
+          titulo: 'Antes de gravar, conhecer o lugar.',
+          texto: 'Uma visita presencial à Ruff Distribuidora, em Paulínia/SP, ainda em 2026. É com ela que escrevemos o roteiro e chegamos na diária com tudo planejado.',
+          objetivos: [
+            'Conhecer a estrutura e o ambiente operacional',
+            'Avaliar as condições de captação',
+            'Alinhar os procedimentos com a equipe responsável',
+            'Planejar os enquadramentos e a sequência de cenas',
+            'Avaliar as possibilidades técnicas de captação em primeira pessoa',
+          ],
+        },
+      },
+      atencao: {
+        eyebrow: 'Pontos de atenção',
+        titulo: ['Planejado junto', 'com a segurança da unidade.'],
+        destaque: 1,
+        itens: [
+          {
+            icone: 'calendario',
+            titulo: 'Data da produção',
+            texto: 'Prevista para janeiro/fevereiro de 2027, com data a definir em conjunto com a Starrett e a Ruff Distribuidora.',
+          },
+          {
+            icone: 'escudo',
+            titulo: 'Áreas com restrição',
+            texto: 'Algumas áreas operacionais têm restrições de captação pela presença de combustíveis e possíveis atmosferas explosivas.',
+          },
+          {
+            icone: 'oculos',
+            titulo: 'Captação em primeira pessoa',
+            texto: 'A solução com óculos inteligentes será avaliada na visita técnica e depende da autorização da equipe de segurança da unidade.',
+          },
+        ],
+      },
+      investimento: {
+        eyebrow: 'Investimento',
+        titulo: ['Produção audiovisual', 'completa.'],
+        destaque: 1,
+        condicoes: [
+          'Visita técnica prévia à Ruff Distribuidora, inclusa sem custo adicional',
+          'Roteiro criado após a visita técnica',
+          '01 diária de captação em Paulínia/SP, com direção e acompanhamento',
+          'Edição e finalização de 01 vídeo vertical (9:16), com entrega digital',
+          'Banco de imagens bruto da captação',
+        ],
+        legenda: 'Investimento total',
+        valor: 1990,
+      },
+    },
+  },
   aquila: {
     nome: 'Espaço Áquila',
     logo: '/proposta/logo-aquila.png',
@@ -695,6 +846,74 @@ export const CLIENTES_PROPOSTA = {
         },
       ],
     },
+  },
+  /* Clínica de harmonização facial em Sorocaba/SP. O estudo foi escrito sem
+     material público do cliente (nem site nem perfil indexado), então não
+     afirma tempo de casa, equipe ou números — só o que a marca e o segmento
+     sustentam. Ao ter o Instagram/briefing, troque os itens do bloco 01 por
+     fatos reais. */
+  parolini: {
+    nome: 'Parolini Clinic',
+    logo: '/proposta/logo-parolini.png',
+    olhar: {
+      negocio: {
+        headline: [{ texto: 'Uma marca que já nasce se posicionando como premium.' }],
+        itens: [
+          { icone: 'predio', texto: 'Clínica em Sorocaba/SP' },
+          { icone: 'engrenagem', texto: 'Foco em harmonização facial' },
+          { icone: 'check', texto: 'Identidade visual de alto padrão' },
+        ],
+        nota: 'O dourado, a serifa e o monograma deixam claro que a clínica não quer disputar por preço.',
+      },
+      diferencial: {
+        headline: [{ texto: 'Em harmonização, quem decide é a confiança.' }],
+        itens: [
+          { icone: 'check', texto: 'Quem aplica — a técnica e o critério por trás do resultado' },
+          { icone: 'check', texto: 'Naturalidade — resultado que não denuncia o procedimento' },
+          { icone: 'check', texto: 'Cuidado — o atendimento antes, durante e depois' },
+        ],
+        nota: 'É o que a paciente investiga antes de marcar a avaliação, e é o que o vídeo mostra melhor do que qualquer legenda.',
+      },
+      oportunidade: {
+        headline: [
+          { texto: 'O desafio ', gold: true },
+          { texto: 'não é mostrar procedimento. ' },
+          { texto: 'É gerar confiança antes da primeira consulta.', gold: true },
+        ],
+        icone: 'olho',
+        texto: 'Todo perfil de harmonização da cidade publica antes e depois. O que separa uma clínica premium das demais é quem está por trás do resultado, o ambiente e a segurança que a paciente sente antes mesmo de chegar.',
+      },
+      comunicacao: {
+        headline: [{ texto: 'Conteúdo que faz a paciente se sentir em boas mãos.' }],
+        passos: [
+          { rotulo: 'Mostrar', texto: 'Quem aplica, o ambiente e o cuidado em cada etapa.' },
+          { rotulo: 'Provar', texto: 'Resultados naturais e pacientes reais contando a experiência.' },
+          { rotulo: 'Diferenciar', texto: 'Técnica, critério e o padrão premium da marca.' },
+        ],
+      },
+      direcoes: [
+        { texto: 'Autoridade', icone: 'estrela' },
+        { texto: 'Desejo', icone: 'alvo' },
+        { texto: 'Prova', icone: 'escudo' },
+        { texto: 'Quebra de objeções', icone: 'balao' },
+      ],
+      /* Sem fotos da clínica ainda: os stills da base seguram o lugar.
+         Substituir por imagens do espaço/atendimento quando chegarem. */
+      imagens: [
+        '/proposta/base/faixa-1.jpg',
+        '/proposta/base/faixa-2.jpg',
+        '/proposta/base/faixa-3.jpg',
+      ],
+    },
+    /* Recorte voltado a serviço de beleza e marca de acabamento premium. */
+    portfolio: montarPortfolio([
+      'Apotica',
+      'Villa Maré Hotel',
+      'Reinauguração Apotica',
+      'Mini Serie Barbearia',
+      'Criativo Barbearia',
+      'R3 Fitness Academia',
+    ]),
   },
 };
 

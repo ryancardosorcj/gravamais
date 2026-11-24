@@ -5,14 +5,20 @@ import {
   Clock,
   Clapperboard,
   Cog,
+  Glasses,
+  MapPin,
   Package,
   Quote,
+  ShieldAlert,
+  Smartphone,
   Smile,
   Star,
   Users,
+  Video,
 } from 'lucide-react';
 
 import { Reveal, TitleBlock } from '../ui';
+import Referencias from './Referencias';
 
 /* Proposta de projeto único — o roteiro do vídeo no lugar do trecho
    "método → olhar → planos" da página.
@@ -25,7 +31,16 @@ import { Reveal, TitleBlock } from '../ui';
    Conteúdo todo em `cliente.projeto` (data/proposta.js). Cada seção some se
    o bloco dela não existir, então um projeto menor não renderiza vazio. */
 
-const ICONES_FICHA = { relogio: Clock, pessoas: Users };
+const ICONES_FICHA = {
+  relogio: Clock,
+  pessoas: Users,
+  local: MapPin,
+  formato: Smartphone,
+  camera: Video,
+  calendario: CalendarDays,
+};
+
+const ICONES_ATENCAO = { calendario: CalendarDays, escudo: ShieldAlert, oculos: Glasses };
 
 const ICONES = {
   pessoas: Users,
@@ -39,7 +54,17 @@ const ICONES = {
 };
 
 export default function ProjetoProposta({ projeto }) {
-  const { escopo, conteudos, depoimentos, roteiro, entrevista, investimento } = projeto;
+  const {
+    escopo,
+    conteudos,
+    depoimentos,
+    roteiro,
+    referencias,
+    entregas,
+    atencao,
+    entrevista,
+    investimento,
+  } = projeto;
 
   return (
     <>
@@ -47,6 +72,11 @@ export default function ProjetoProposta({ projeto }) {
       {conteudos && <Conteudos dados={conteudos} />}
       {depoimentos && <Depoimentos dados={depoimentos} />}
       {roteiro && <Roteiro dados={roteiro} />}
+      {/* Formato da Starrett: quadro de referências, entregas e pontos de
+          atenção. Também escuros, dentro do mesmo bloco. */}
+      {referencias && <Referencias dados={referencias} />}
+      {entregas && <Entregas dados={entregas} />}
+      {atencao && <Atencao dados={atencao} />}
       {/* Sem investimento, a última seção escura é a que fecha o bloco. */}
       {entrevista && <Entrevista dados={entrevista} caixa={investimento ? '' : 'caixa-pe'} />}
       {investimento && <Investimento dados={investimento} />}
@@ -365,6 +395,122 @@ function Campo({ rotulo, aspas = false, children }) {
         {aspas ? `“${children}”` : children}
       </p>
     </div>
+  );
+}
+
+/* Entregas: etapas + produção + visita técnica ----------------- */
+/* No alto, as etapas do trabalho numa linha só — é onde fica claro que o
+   roteiro nasce da visita, antes da captação. Sem números: a linha e a
+   posição já dizem a ordem.
+   Esquerda, a lista da produção (mesmo desenho do "incluso" do escopo).
+   Direita, a visita técnica num cartão com borda dourada e o selo de
+   "inclusa" — é a etapa que mais pesa na percepção de cuidado, e a que o
+   cliente pode achar que custa à parte. */
+function Entregas({ dados }) {
+  const { producao, visita } = dados;
+  return (
+    <section id="entregas" data-tone="dark" className="section relative overflow-hidden">
+      <div className="container-ds">
+        <Reveal>
+          <Eyebrow>{dados.eyebrow}</Eyebrow>
+          <Titulo dados={dados} />
+        </Reveal>
+
+        {dados.etapas && (
+          <Reveal delay={0.05}>
+            <ol className="mt-14 grid grid-cols-2 gap-y-10 lg:grid-cols-4">
+              {dados.etapas.map(({ titulo, quando }) => (
+                <li key={titulo} className="relative border-t border-gold/40 pr-6 pt-6">
+                  <span aria-hidden className="absolute -top-[5px] left-0 size-2.5 rounded-full bg-gold" />
+                  <p className="font-display text-lg font-bold leading-snug text-fg-primary md:text-xl">
+                    {titulo}
+                  </p>
+                  <p className="mt-2 font-mono text-2xs uppercase tracking-[0.2em] text-fg-muted">{quando}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        )}
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+          <Reveal>
+            <p className="font-mono text-2xs uppercase tracking-[0.2em] text-gold">{producao.rotulo}</p>
+            <ul className="mt-5 border-t border-subtle">
+              {producao.itens.map((item) => (
+                <li key={item} className="flex items-start gap-3.5 border-b border-subtle py-5">
+                  <CircleCheck size={17} strokeWidth={1.5} className="mt-0.5 shrink-0 text-gold" />
+                  <span className="text-sm leading-snug text-fg-secondary md:text-base">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="rounded-lg border border-gold/40 bg-bg-surface p-7 md:p-10">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <p className="font-mono text-2xs uppercase tracking-[0.2em] text-gold">{visita.rotulo}</p>
+                {/* Uma linha só: a pílula quebrada em duas vira um bloco
+                    disforme. O tracking aperta no mobile para caber em 375px. */}
+                <span className="whitespace-nowrap rounded-full border border-gold/50 bg-gold/10 px-3.5 py-1.5 font-mono text-2xs uppercase tracking-[0.06em] text-gold sm:tracking-[0.16em]">
+                  {visita.selo}
+                </span>
+              </div>
+              <h3 className="mt-6 font-display text-2xl font-bold leading-snug tracking-tight text-fg-primary md:text-3xl">
+                {visita.titulo}
+              </h3>
+              <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-fg-muted md:text-base">
+                {visita.texto}
+              </p>
+              <ol className="mt-8 border-t border-subtle">
+                {visita.objetivos.map((o, i) => (
+                  <li key={o} className="flex items-start gap-4 border-b border-subtle py-4 last:border-b-0 last:pb-0">
+                    <span className="w-6 shrink-0 font-mono text-xs leading-6 text-gold">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-sm leading-relaxed text-fg-secondary">{o}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* Pontos de atenção ------------------------------------------- */
+/* Três cartões curtos e iguais: data, restrição e POV. Informam sem
+   alarmar — por isso o dourado no ícone e não um tom de alerta. */
+function Atencao({ dados }) {
+  return (
+    <section id="atencao" data-tone="dark" className="section relative overflow-hidden">
+      <div className="container-ds">
+        <Reveal>
+          <Eyebrow>{dados.eyebrow}</Eyebrow>
+          <Titulo dados={dados} />
+        </Reveal>
+
+        <ul className="mt-14 grid gap-4 md:grid-cols-3 md:gap-5">
+          {dados.itens.map(({ icone, titulo, texto }, i) => {
+            const Icone = ICONES_ATENCAO[icone];
+            return (
+              <li key={titulo}>
+                <Reveal delay={0.05 * i} className="h-full">
+                  <div className="h-full rounded-lg border border-subtle bg-bg-surface p-6 md:p-8">
+                    {Icone && <Icone size={20} strokeWidth={1.5} className="text-gold" />}
+                    <h3 className="mt-6 font-display text-lg font-bold leading-snug text-fg-primary md:text-xl">
+                      {titulo}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-fg-muted">{texto}</p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
   );
 }
 
