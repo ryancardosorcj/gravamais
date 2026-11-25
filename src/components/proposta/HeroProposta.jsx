@@ -6,9 +6,13 @@ import { HERO_PROPOSTA } from '../../data/proposta';
 
    A diferença é o par de logos no topo do bloco de texto. Quando o cliente não
    tem logo no acervo, a assinatura da GravaMais fica sozinha e centralizada —
-   o divisor e o slot vazio saem juntos, senão sobra um traço órfão. */
-export default function HeroProposta({ cliente }) {
+   o divisor e o slot vazio saem juntos, senão sobra um traço órfão.
+
+   `textos` (opcional) troca saudação, subtítulo e CTA — é o que a página de
+   roteiro usa para não falar em "proposta". Sem ele, vale HERO_PROPOSTA. */
+export default function HeroProposta({ cliente, textos }) {
   const reduz = useReducedMotion();
+  const t = { ...HERO_PROPOSTA, ...textos };
 
   const entra = (delay = 0) => ({
     initial: reduz ? false : { opacity: 0, y: 20 },
@@ -68,7 +72,7 @@ export default function HeroProposta({ cliente }) {
           className="accent-on-video font-display text-lg font-medium md:text-2xl"
           {...entra(0.1)}
         >
-          {HERO_PROPOSTA.saudacao}
+          {t.saudacao}
         </motion.p>
 
         {/* Caixa alta pela classe, não no dado: `cliente.nome` ainda é lido em
@@ -88,15 +92,15 @@ export default function HeroProposta({ cliente }) {
           className="mx-auto mt-6 max-w-[54ch] text-base leading-relaxed text-white/80 md:max-w-none md:whitespace-nowrap"
           {...entra(0.24)}
         >
-          {HERO_PROPOSTA.subtitulo}
+          {t.subtitulo}
         </motion.p>
 
         <motion.div className="mt-9 flex justify-center" {...entra(0.32)}>
           <a
-            href={cliente.ctaHref ?? HERO_PROPOSTA.ctaHref}
+            href={cliente.ctaHref ?? t.ctaHref}
             className="btn btn-primary btn-lg w-full sm:w-auto"
           >
-            {HERO_PROPOSTA.cta}
+            {t.cta}
           </a>
         </motion.div>
       </div>

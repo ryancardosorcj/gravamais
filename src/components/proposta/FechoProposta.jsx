@@ -41,7 +41,10 @@ function WhatsAppIcon({ size = 18 }) {
    Tom CLARO com `caixa-pe`, fechando o bloco que o FAQ abriu — é o mesmo
    arranjo do fim da LP (CTA claro, depois o rodapé escuro). Por isso a
    assinatura aqui é a logo PRETA: a branca sumiria no fundo. */
-export default function FechoProposta({ caixa = 'caixa-pe' }) {
+/* `textos` (opcional) troca título, eyebrow e o CTA — a página de roteiro
+   fecha com "o que você achou?" em vez do convite comercial. */
+export default function FechoProposta({ caixa = 'caixa-pe', textos }) {
+  const t = { ...FECHO, cta: 'Falar com a GravaMais', ctaHref: whatsappLink, ...textos };
   const contatos = [
     {
       icone: WhatsAppIcon,
@@ -69,8 +72,8 @@ export default function FechoProposta({ caixa = 'caixa-pe' }) {
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <TitleBlock
-              linhas={FECHO.titulo}
-              destaque={FECHO.destaque}
+              linhas={t.titulo}
+              destaque={t.destaque}
               className="font-display text-3xl font-extrabold leading-[1.1] tracking-tight md:text-5xl"
             />
 
@@ -83,7 +86,7 @@ export default function FechoProposta({ caixa = 'caixa-pe' }) {
             />
 
             <p className="mt-12 font-mono text-2xs uppercase tracking-[0.2em] text-fg-subtle">
-              {FECHO.eyebrow}
+              {t.eyebrow}
             </p>
 
             <ul className="mt-6 flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-10">
@@ -105,12 +108,12 @@ export default function FechoProposta({ caixa = 'caixa-pe' }) {
 
             <div className="mt-12 flex justify-center">
               <a
-                href={whatsappLink}
+                href={t.ctaHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-lg w-full sm:w-auto"
               >
-                Falar com a GravaMais
+                {t.cta}
               </a>
             </div>
           </div>
